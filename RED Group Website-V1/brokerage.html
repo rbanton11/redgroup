@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brokerage – The RED Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--red:#8B0000;--red-mid:#a80000;--red-glow:rgba(139,0,0,0.18);--black:#0d0d0d;--gray-dark:#1a1a1a;--gray-mid:#2e2e2e;--gray-light:#888;--white:#f8f5f0;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:300;overflow-x:hidden}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:72px;background:rgba(13,13,13,0.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(139,0,0,0.25);transition:box-shadow .3s}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:38px;height:38px;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.15rem;font-weight:900;color:var(--white)}
+.logo-text{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);letter-spacing:.08em;text-transform:uppercase}
+nav{display:flex;gap:2.2rem;align-items:center}
+nav a{color:var(--gray-light);text-decoration:none;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+nav a:hover,nav a.active{color:var(--white)}
+.btn-nav{background:var(--red);color:var(--white);padding:.5rem 1.4rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background .2s}
+.btn-nav:hover{background:var(--red-mid)}
+
+/* PAGE HERO */
+.page-hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 5vw 80px;position:relative;overflow:hidden;gap:4rem}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 65% 50%,rgba(139,0,0,0.14) 0%,transparent 70%);pointer-events:none}
+.hero-bg-text{position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:22vw;font-weight:900;color:rgba(139,0,0,0.04);line-height:1;pointer-events:none;white-space:nowrap}
+.hero-left{position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--red)}
+h1{font-family:var(--serif);font-size:clamp(2.8rem,5vw,5rem);font-weight:900;line-height:1.04;color:var(--white);margin-bottom:1.5rem}
+h1 em{font-style:italic;color:var(--red)}
+.hero-desc{font-size:1.05rem;color:var(--gray-light);line-height:1.75;max-width:440px;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:var(--white);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--red-mid);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.25);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-block;transition:border-color .2s,transform .15s}
+.btn-outline:hover{border-color:var(--white);transform:translateY(-2px)}
+
+.hero-right{position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:center}
+.hero-img-wrap{position:relative;width:clamp(280px,38vw,520px);aspect-ratio:3/4}
+.hero-img-wrap::before{content:'';position:absolute;top:-18px;left:-18px;right:18px;bottom:18px;border:1px solid rgba(139,0,0,0.35);z-index:0}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;filter:brightness(.82) saturate(1.05)}
+.hero-badge{position:absolute;bottom:-20px;left:-32px;z-index:3;background:var(--red);padding:1.1rem 1.5rem}
+.badge-num{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:var(--white);line-height:1}
+.badge-label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:.3rem}
+
+/* SECTIONS */
+section{padding:100px 5vw}
+.section-label{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.section-label::before{content:'';width:22px;height:1px;background:var(--red)}
+h2{font-family:var(--serif);font-size:clamp(2rem,3.2vw,2.8rem);font-weight:900;line-height:1.1;color:var(--white)}
+h3{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--white)}
+
+/* SERVICES BREAKDOWN */
+.services-detail{background:var(--gray-dark)}
+.sd-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);margin-top:3rem}
+.sd-card{background:var(--gray-dark);padding:2.5rem 2.2rem;border-top:3px solid transparent;transition:border-color .25s,background .25s}
+.sd-card:hover{border-color:var(--red);background:#1e1e1e}
+.sd-icon{width:48px;height:48px;background:var(--red-glow);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.sd-card h3{margin-bottom:.8rem}
+.sd-card p{font-size:.9rem;color:var(--gray-light);line-height:1.7}
+
+/* PROCESS */
+.process{position:relative}
+.process-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:3.5rem}
+.process-steps{display:flex;flex-direction:column;gap:0}
+.proc-step{display:flex;gap:1.8rem;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.06);position:relative;cursor:pointer;transition:padding-left .2s}
+.proc-step:hover{padding-left:.5rem}
+.proc-step:last-child{border-bottom:none}
+.proc-num{font-family:var(--serif);font-size:2.5rem;font-weight:900;color:rgba(139,0,0,.2);line-height:1;min-width:50px;transition:color .2s}
+.proc-step:hover .proc-num{color:var(--red)}
+.proc-content h4{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.proc-content p{font-size:.88rem;color:var(--gray-light);line-height:1.7}
+.process-cta-box{background:var(--gray-dark);padding:2.5rem;border-left:3px solid var(--red)}
+.process-cta-box h3{margin-bottom:1rem}
+.process-cta-box p{font-size:.9rem;color:var(--gray-light);line-height:1.7;margin-bottom:1.8rem}
+.cta-items{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.8rem}
+.cta-item{display:flex;align-items:center;gap:.7rem;font-size:.88rem;color:var(--gray-light)}
+.cta-item::before{content:'✓';color:var(--red);font-weight:700;flex-shrink:0}
+
+/* LISTINGS PREVIEW */
+.listings{}
+.listings-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.listings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.listing-card{background:var(--gray-dark);overflow:hidden;cursor:pointer;transition:transform .3s}
+.listing-card:hover{transform:translateY(-6px)}
+.listing-img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.listing-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;filter:brightness(.85)}
+.listing-card:hover .listing-img img{transform:scale(1.05)}
+.listing-tag{position:absolute;top:12px;left:12px;background:var(--red);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .7rem;color:var(--white)}
+.listing-body{padding:1.4rem 1.5rem}
+.listing-price{font-family:var(--serif);font-size:1.4rem;font-weight:900;color:var(--white);margin-bottom:.4rem}
+.listing-address{font-size:.85rem;color:var(--gray-light);margin-bottom:.9rem}
+.listing-specs{display:flex;gap:1.2rem}
+.spec{font-size:.78rem;color:var(--gray-light);display:flex;align-items:center;gap:.3rem}
+.spec-val{color:var(--white);font-weight:500}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--gray-dark);position:relative;overflow:hidden}
+.testimonials::before{content:'\201C';font-family:var(--serif);font-size:20rem;font-weight:900;color:rgba(139,0,0,.05);position:absolute;top:-2rem;left:3vw;line-height:1;pointer-events:none}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;margin-top:3rem}
+.testi-card{padding:2rem;border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:1.2rem;transition:border-color .25s}
+.testi-card:hover{border-color:rgba(139,0,0,.4)}
+.stars{color:var(--red);font-size:.9rem;letter-spacing:3px}
+.testi-text{font-size:.9rem;color:var(--gray-light);line-height:1.75;font-style:italic;flex:1}
+.testi-author{display:flex;align-items:center;gap:.9rem}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--red-glow);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;color:var(--red);font-size:.95rem;flex-shrink:0}
+.author-name{font-weight:500;font-size:.88rem;color:var(--white)}
+.author-role{font-size:.75rem;color:var(--gray-light)}
+
+/* FAQ */
+.faq{}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
+.faq-list{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.05)}
+.faq-item{background:var(--black);padding:1.5rem 1.8rem;cursor:pointer}
+.faq-item.open{background:var(--gray-dark)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.faq-q span{font-size:.92rem;font-weight:500;color:var(--white)}
+.faq-toggle{color:var(--red);font-size:1.2rem;flex-shrink:0;transition:transform .3s}
+.faq-item.open .faq-toggle{transform:rotate(45deg)}
+.faq-a{font-size:.87rem;color:var(--gray-light);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .35s ease,margin-top .3s}
+.faq-item.open .faq-a{max-height:200px;margin-top:.9rem}
+.faq-cta-box{position:sticky;top:100px;background:var(--gray-dark);padding:2.5rem;border-top:3px solid var(--red)}
+.faq-cta-box h3{margin-bottom:1rem}
+.faq-cta-box p{font-size:.9rem;color:var(--gray-light);line-height:1.7;margin-bottom:1.8rem}
+.form-field{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:var(--white);font-family:var(--sans);font-size:.88rem;outline:none;margin-bottom:.9rem;transition:border-color .2s}
+.form-field:focus{border-color:var(--red)}
+.form-field::placeholder{color:var(--gray-light)}
+
+/* CTA STRIP */
+.cta-strip{background:var(--red);padding:60px 5vw;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.cta-strip h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:var(--white)}
+.cta-strip p{color:rgba(255,255,255,.75);font-size:.95rem;margin-top:.5rem}
+.btn-white{background:var(--white);color:var(--black);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-block;transition:opacity .2s,transform .15s}
+.btn-white:hover{opacity:.9;transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:#0a0a0a;padding:60px 5vw 30px;border-top:1px solid rgba(255,255,255,.07)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{font-size:.88rem;color:var(--gray-light);line-height:1.7;margin:1rem 0 1.5rem;max-width:260px}
+.footer-socials{display:flex;gap:.8rem}
+.social-link{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--gray-light);text-decoration:none;transition:border-color .2s,color .2s}
+.social-link:hover{border-color:var(--red);color:var(--white)}
+.footer-col h4{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:1.2rem}
+.footer-col a{display:block;font-size:.85rem;color:var(--gray-light);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.78rem;color:var(--gray-light)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* MOBILE */
+@media(max-width:900px){.page-hero,.process-wrap,.faq-grid{grid-template-columns:1fr}.hero-right,.hero-bg-text{display:none}.sd-grid{grid-template-columns:1fr}.listings-grid{grid-template-columns:1fr 1fr}.testi-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}nav{display:none}}
+@media(max-width:600px){.listings-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">R</div>
+    <span class="logo-text">The RED Group</span>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="brokerage.html" class="active">Brokerage</a>
+    <a href="property-management.html">Management</a>
+    <a href="design.html">Design</a>
+    <a href="development.html">Development</a>
+    <a href="listings.html">Listings</a>
+    <a href="#contact" class="btn-nav">Schedule a Consultation</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-bg-text">SELL</div>
+  <div class="hero-left">
+    <div class="eyebrow">Brokerage Services</div>
+    <h1>Buy, Sell &amp;<br><em>List</em> with<br>Confidence.</h1>
+    <p class="hero-desc">The RED Group's brokerage division handles residential and commercial transactions with precision, market expertise, and a client-first approach that gets results — fast.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Submit Your Property</a>
+      <a href="#process" class="btn-outline">See Our Process</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80" alt="Home for sale" />
+      <div class="hero-badge">
+        <div class="badge-num">9 Days</div>
+        <div class="badge-label">Avg. Days to Contract</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE BREAKDOWN -->
+<section class="services-detail">
+  <div class="section-label reveal">What We Offer</div>
+  <h2 class="reveal">Full-Spectrum Brokerage<br>Representation</h2>
+  <div class="sd-grid">
+    <div class="sd-card reveal">
+      <div class="sd-icon">🏡</div>
+      <h3>Seller Representation</h3>
+      <p>We price, market, and negotiate your property to maximize net proceeds. From listing to close, our team handles every detail — professional photography, MLS exposure, and qualified buyer vetting.</p>
+    </div>
+    <div class="sd-card reveal">
+      <div class="sd-icon">🔍</div>
+      <h3>Buyer Representation</h3>
+      <p>Whether you're a first-time homebuyer or seasoned investor, we identify the right property, negotiate favorable terms, and guide you through every step of the purchase process.</p>
+    </div>
+    <div class="sd-card reveal">
+      <div class="sd-icon">🏢</div>
+      <h3>Commercial Transactions</h3>
+      <p>Office, retail, multi-family, and mixed-use — our commercial brokerage team brings market intelligence and deal-structuring experience to every commercial transaction.</p>
+    </div>
+    <div class="sd-card reveal">
+      <div class="sd-icon">📋</div>
+      <h3>Wholesale &amp; Off-Market</h3>
+      <p>For sellers who need speed and certainty, we leverage our investor network to connect distressed or motivated sellers with qualified cash buyers — often closing in days, not months.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-wrap">
+    <div>
+      <div class="section-label reveal">How It Works</div>
+      <h2 class="reveal">Our Brokerage<br>Process, Step by Step.</h2>
+      <div class="process-steps" style="margin-top:2.5rem">
+        <div class="proc-step reveal">
+          <div class="proc-num">01</div>
+          <div class="proc-content">
+            <h4>Free Property Consultation</h4>
+            <p>We assess your property, discuss your timeline and goals, and give you a transparent market analysis — no obligation, no pressure.</p>
+          </div>
+        </div>
+        <div class="proc-step reveal">
+          <div class="proc-num">02</div>
+          <div class="proc-content">
+            <h4>Strategic Pricing &amp; Listing Prep</h4>
+            <p>We identify the optimal price point and prepare your property for maximum appeal — coordinating photography, staging recommendations, and MLS listing setup.</p>
+          </div>
+        </div>
+        <div class="proc-step reveal">
+          <div class="proc-num">03</div>
+          <div class="proc-content">
+            <h4>Active Marketing &amp; Showings</h4>
+            <p>Your property gets exposure across MLS, social media, targeted digital ads, and our buyer network. We coordinate all showings and provide regular feedback.</p>
+          </div>
+        </div>
+        <div class="proc-step reveal">
+          <div class="proc-num">04</div>
+          <div class="proc-content">
+            <h4>Offer Negotiation &amp; Due Diligence</h4>
+            <p>We analyze every offer, negotiate firmly on your behalf, and manage the inspection, appraisal, and due diligence period to protect your interests.</p>
+          </div>
+        </div>
+        <div class="proc-step reveal">
+          <div class="proc-num">05</div>
+          <div class="proc-content">
+            <h4>Closing &amp; Beyond</h4>
+            <p>We coordinate with title, lenders, and attorneys to ensure a smooth closing — and stay available after the transaction for any follow-up needs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="process-cta-box reveal">
+        <h3>Ready to Sell or Buy?</h3>
+        <p>Submit your property or request a consultation and our brokerage team will reach out within 24 hours.</p>
+        <div class="cta-items">
+          <div class="cta-item">No upfront fees or obligations</div>
+          <div class="cta-item">Transparent commission structure</div>
+          <div class="cta-item">Cash offer options available</div>
+          <div class="cta-item">Residential &amp; commercial</div>
+          <div class="cta-item">Licensed Georgia broker</div>
+        </div>
+        <a href="#contact" class="btn-primary" style="width:100%;text-align:center">Submit Your Property</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS PREVIEW -->
+<section class="listings" style="background:var(--gray-dark)">
+  <div class="listings-header reveal">
+    <div>
+      <div class="section-label">Current Listings</div>
+      <h2>Featured Properties</h2>
+    </div>
+    <a href="#contact" class="btn-outline">View All Listings</a>
+  </div>
+  <div class="listings-grid">
+    <div class="listing-card reveal">
+      <div class="listing-img">
+        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80" alt="Property"/>
+        <span class="listing-tag">For Sale</span>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$329,000</div>
+        <div class="listing-address">1482 Creekside Drive, Marietta, GA</div>
+        <div class="listing-specs">
+          <div class="spec"><span class="spec-val">4</span> bd</div>
+          <div class="spec"><span class="spec-val">2.5</span> ba</div>
+          <div class="spec"><span class="spec-val">2,180</span> sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img">
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80" alt="Property"/>
+        <span class="listing-tag">For Sale</span>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$485,000</div>
+        <div class="listing-address">3320 Peachtree Hills Ave, Atlanta, GA</div>
+        <div class="listing-specs">
+          <div class="spec"><span class="spec-val">5</span> bd</div>
+          <div class="spec"><span class="spec-val">3</span> ba</div>
+          <div class="spec"><span class="spec-val">3,040</span> sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-img">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="Property"/>
+        <span class="listing-tag">Under Contract</span>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">$247,500</div>
+        <div class="listing-address">807 Oak Grove Rd, Decatur, GA</div>
+        <div class="listing-specs">
+          <div class="spec"><span class="spec-val">3</span> bd</div>
+          <div class="spec"><span class="spec-val">2</span> ba</div>
+          <div class="spec"><span class="spec-val">1,620</span> sqft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label reveal">Client Stories</div>
+  <h2 class="reveal">What Sellers &amp; Buyers Say</h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"We were hesitant to sell but The RED Group walked us through every step. Our home sold in 9 days — $12,000 over asking. Absolutely phenomenal service."</p>
+      <div class="testi-author">
+        <div class="avatar">KT</div>
+        <div><div class="author-name">Kevin &amp; Trish M.</div><div class="author-role">Home Sellers · Marietta, GA</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"As a first-time buyer I was nervous. My agent at The RED Group was patient, knowledgeable, and found us the perfect home under budget. Couldn't ask for more."</p>
+      <div class="testi-author">
+        <div class="avatar">AS</div>
+        <div><div class="author-name">Aisha S.</div><div class="author-role">First-Time Buyer · Decatur, GA</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"I needed to sell fast and avoid the MLS process. The RED Group brought a cash buyer within 4 days. Closed in 3 weeks. Saved me months of stress."</p>
+      <div class="testi-author">
+        <div class="avatar">RL</div>
+        <div><div class="author-name">Raymond L.</div><div class="author-role">Motivated Seller · Atlanta, GA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" style="background:var(--gray-dark)">
+  <div class="faq-grid">
+    <div>
+      <div class="section-label reveal">Common Questions</div>
+      <h2 class="reveal">Brokerage FAQ</h2>
+      <div class="faq-list" style="margin-top:2.5rem">
+        <div class="faq-item open reveal">
+          <div class="faq-q"><span>What is your commission structure?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a">Our commission is competitive and transparent, discussed upfront during your consultation. We believe in earning our fee through results — no surprises at the closing table.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q"><span>Do you offer cash offers for distressed properties?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. Through our wholesale and investor network, we can often present cash offers on properties in any condition — typically closing in 14–30 days.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q"><span>How long does it typically take to sell?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a">Well-priced Georgia properties in our network typically go under contract within 7–21 days. Timeline depends on condition, pricing, and market conditions — we'll give you a realistic picture upfront.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q"><span>Do I need to make repairs before listing?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a">Not necessarily. We'll advise on which improvements yield the highest ROI and when an as-is listing or cash sale makes more financial sense for your situation.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q"><span>Can you help with commercial real estate?</span><span class="faq-toggle">+</span></div>
+          <div class="faq-a">Absolutely. Our brokerage handles office, retail, warehouse, and multi-family commercial transactions across the greater Atlanta metro area.</div>
+        </div>
+      </div>
+    </div>
+    <div id="contact">
+      <div class="faq-cta-box reveal">
+        <h3>Schedule a Free<br>Consultation</h3>
+        <p>No pressure. No obligation. Just a conversation about your property goals and how The RED Group can help you get there.</p>
+        <input class="form-field" type="text" placeholder="Your Name"/>
+        <input class="form-field" type="tel" placeholder="Phone Number"/>
+        <input class="form-field" type="email" placeholder="Email Address"/>
+        <select class="form-field" style="color:#888">
+          <option value="">I want to...</option>
+          <option>Sell my property</option>
+          <option>Buy a property</option>
+          <option>Explore a cash offer</option>
+          <option>List a commercial property</option>
+        </select>
+        <textarea class="form-field" rows="3" placeholder="Brief description of your property or needs" style="resize:vertical"></textarea>
+        <button style="width:100%;padding:.9rem;background:var(--red);color:var(--white);border:none;font-family:var(--sans);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s" onmouseover="this.style.background='#a80000'" onmouseout="this.style.background='#8B0000'">Submit My Property →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div>
+    <h2>Ready to Make Your Move?</h2>
+    <p>Contact The RED Group today and let's build a strategy around your goals.</p>
+  </div>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="#contact" class="btn-white">Submit Your Property</a>
+    <a href="index.html" class="btn-outline" style="border-color:rgba(255,255,255,.4);color:var(--white)">View All Services</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom:.8rem;display:inline-flex">
+        <div class="logo-mark">R</div><span class="logo-text">The RED Group</span>
+      </a>
+      <p>Georgia's full-service real estate firm. Brokerage, property management, design, and development.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="#">(404) 555-0000</a><a href="#"><span class="__cf_email__" data-cfemail="f39a9d959cb3879b9681969794819c8683dd909c9e">[email&#160;protected]</span></a><a href="#">Atlanta, Georgia</a><a href="#">Schedule a Consultation</a></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker.</p>
+    <p>GA License #000000</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+reveals.forEach(r=>obs.observe(r));
+window.addEventListener('scroll',()=>{document.querySelector('header').style.boxShadow=wind
