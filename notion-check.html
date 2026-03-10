@@ -55,6 +55,7 @@ h1{font-size:1.6rem;margin-bottom:.4rem;color:#fff}
 
 <script>
 const ENDPOINTS = [
+  { db:"ping",         label:"🔑 Token Auth Check",          page:"ALL PAGES — test this first" },
   { db:"projects",      label:"Projects",                 page:"projects.html" },
   { db:"listings",      label:"Listings (all)",           page:"listings.html" },
   { db:"sale",          label:"Listings → For Sale",      page:"listings.html" },
@@ -118,6 +119,22 @@ async function checkEndpoint(ep) {
     }
 
     const count = data.results?.length ?? "?";
+
+    // Ping endpoint returns {ok, message} not {results}
+    if (data.ok === true) {
+      badge.className = "badge badge-ok";
+      badge.textContent = "✓ Valid";
+      result.className = "result ok";
+      result.innerHTML = `✓ ${data.message}<br><span style="color:#666">Integration: ${data.integration || "—"} &nbsp;·&nbsp; API: ${data.notionVersion || "—"}</span>`;
+      return "ok";
+    }
+    if (data.ok === false) {
+      badge.className = "badge badge-err";
+      badge.textContent = "Auth Failed";
+      result.className = "result err";
+      result.textContent = (data.error || "") + (data.help ? "\n→ " + data.help : "");
+      return "err";
+    }
 
     if (count === 0) {
       badge.className = "badge badge-empty";
