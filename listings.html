@@ -147,7 +147,7 @@ footer{background:#0a0a0a;padding:60px 5vw 30px;border-top:1px solid rgba(255,25
 .footer-bottom p{font-size:.78rem;color:var(--gray-light)}
 
 /* REVEAL */
-.reveal{opacity:1!important;transform:none!important;visibility:visible!important} .reveal.animate.visible{opacity:1;transform:none}
+.{opacity:1!important;transform:none!important;visibility:visible!important} ...visible{opacity:1;transform:none}
 
 /* MOBILE */
 @media(max-width:900px){nav{display:none}.hero-inner{grid-template-columns:1fr}.hero-stats{justify-content:flex-start}.listings-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}}
@@ -463,8 +463,7 @@ async function init() {
   }
   updateCounts();
   renderListings();
-  initReveal();
-}
+  }
 
 // ============================================================
 //  NOTION FETCH (active when USE_NOTION = true)
@@ -582,9 +581,8 @@ function renderListings() {
 
   grid.innerHTML = filtered.map(l => buildCard(l)).join("");
 
-  // Re-attach reveal
-  grid.querySelectorAll(".listing-card").forEach((el, i) => {
-    setTimeout(() => el.classList.add("reveal", "visible"), i * 80);
+  // Re-attach grid.querySelectorAll(".listing-card").forEach((el, i) => {
+    setTimeout(() => el.classList.add("", "visible"), i * 80);
   });
 }
 
@@ -599,7 +597,7 @@ function statusColor(status) {
 }
 
 function buildCard(l) {
-  return `<div class="listing-card reveal" onclick="openModal(${l.id})">
+  return `<div class="listing-card " onclick="openModal(${l.id})">
     <div class="card-img">
       <img src="${l.image}" alt="${l.address}" loading="lazy"/>
       <div class="card-badges">
@@ -681,6 +679,6 @@ function updateCounts() {
 // ============================================================
 //  SCROLL REVEAL
 // ============================================================
-function initReveal() {
+function {
   const obs = new IntersectionObserver(entries => {
     en

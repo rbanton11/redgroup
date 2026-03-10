@@ -334,7 +334,7 @@
   .footer-bottom p { font-size: .78rem; color: var(--gray-light); }
 
   /* ── SCROLL REVEAL ── */
-  .reveal{opacity:1!important;transform:none!important;visibility:visible!important} .reveal.animate.visible{opacity:1;transform:none}
+  .{opacity:1!important;transform:none!important;visibility:visible!important} ...visible{opacity:1;transform:none}
 
   /* ── MOBILE ── */
   @media (max-width: 1024px) {
@@ -412,14 +412,14 @@ footer .logo-img{height:36px;}
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="services-header reveal">
+  <div class="services-header ">
     <div>
       <div class="section-label">What We Do</div>
       <h2>Four Divisions.<br>One Trusted Partner.</h2>
     </div>
     <a href="#contact" class="btn-outline">View All Services</a>
   </div>
-  <div class="services-grid reveal">
+  <div class="services-grid ">
     <div class="service-card">
       <div class="service-icon">🏠</div>
       <h3>Brokerage</h3>
@@ -450,30 +450,30 @@ footer .logo-img{height:36px;}
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="how-grid">
-    <div class="how-visual reveal">
+    <div class="how-visual ">
       <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80" alt="Property process" />
       <div class="how-visual-overlay"></div>
       <div class="how-badge">Our Process</div>
     </div>
     <div>
-      <div class="section-label reveal">How It Works</div>
-      <h2 class="reveal">From First Call<br>to Final Close.</h2>
+      <div class="section-label ">How It Works</div>
+      <h2 class="">From First Call<br>to Final Close.</h2>
       <div class="steps" style="margin-top:2.5rem;">
-        <div class="step reveal">
+        <div class="step ">
           <div class="step-num">01</div>
           <div class="step-content">
             <h4>Initial Consultation</h4>
             <p>We assess your goals, property, and timeline — whether you're selling, investing, or need management services.</p>
           </div>
         </div>
-        <div class="step reveal">
+        <div class="step ">
           <div class="step-num">02</div>
           <div class="step-content">
             <h4>Custom Strategy</h4>
             <p>Our team builds a tailored plan — pricing, marketing, renovation scope, or investment structuring — aligned to your outcome.</p>
           </div>
         </div>
-        <div class="step reveal">
+        <div class="step ">
           <div class="step-num">03</div>
           <div class="step-content">
             <h4>Execution & Close</h4>
@@ -489,19 +489,19 @@ footer .logo-img{height:36px;}
 <!-- STATS -->
 <div class="stats">
   <div class="stats-inner">
-    <div class="stat-item reveal">
+    <div class="stat-item ">
       <div class="stat-n">150+</div>
       <div class="stat-l">Properties Served</div>
     </div>
-    <div class="stat-item reveal">
+    <div class="stat-item ">
       <div class="stat-n">$12M+</div>
       <div class="stat-l">In Transactions</div>
     </div>
-    <div class="stat-item reveal">
+    <div class="stat-item ">
       <div class="stat-n">4</div>
       <div class="stat-l">Service Divisions</div>
     </div>
-    <div class="stat-item reveal">
+    <div class="stat-item ">
       <div class="stat-n">Georgia</div>
       <div class="stat-l">Licensed & Operating</div>
     </div>
@@ -510,14 +510,14 @@ footer .logo-img{height:36px;}
 
 <!-- PROJECTS -->
 <section class="projects" id="projects">
-  <div class="projects-header reveal">
+  <div class="projects-header ">
     <div>
       <div class="section-label">Portfolio</div>
       <h2>Featured Projects</h2>
     </div>
     <a href="#contact" class="btn-outline">View All Projects</a>
   </div>
-  <div class="projects-grid reveal">
+  <div class="projects-grid ">
     <div class="proj-card">
       <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="Development project" />
       <div class="proj-overlay">
@@ -555,10 +555,10 @@ footer .logo-img{height:36px;}
 
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
-  <div class="section-label reveal">Client Stories</div>
-  <h2 class="reveal">What Our Clients Say</h2>
+  <div class="section-label ">Client Stories</div>
+  <h2 class="">What Our Clients Say</h2>
   <div class="testi-grid">
-    <div class="testi-card reveal">
+    <div class="testi-card ">
       <div class="testi-stars">★★★★★</div>
       <p class="testi-text">"The RED Group made selling my property stress-free. From the first call to the closing table, they kept me informed and got me above asking price."</p>
       <div class="testi-author">
@@ -569,7 +569,7 @@ footer .logo-img{height:36px;}
         </div>
       </div>
     </div>
-    <div class="testi-card reveal">
+    <div class="testi-card ">
       <div class="testi-stars">★★★★★</div>
       <p class="testi-text">"As an investor, I needed a team that understood numbers AND execution. The RED Group's development division delivered exactly what they promised."</p>
       <div class="testi-author">
@@ -580,7 +580,7 @@ footer .logo-img{height:36px;}
         </div>
       </div>
     </div>
-    <div class="testi-card reveal">
+    <div class="testi-card ">
       <div class="testi-stars">★★★★★</div>
       <p class="testi-text">"The property management service is exceptional. My units are fully occupied, maintenance is handled fast, and the monthly reports are crystal clear."</p>
       <div class="testi-author">
@@ -680,8 +680,7 @@ footer .logo-img{height:36px;}
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
+  // Scroll const reveals = document.querySelectorAll('.');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
