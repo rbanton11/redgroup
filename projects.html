@@ -419,31 +419,64 @@ let currentDivision = "all";
 //  INIT
 // ============================================================
 async function init() {
+  const banner = document.getElementById("notionBanner");
+
   if (CONFIG.USE_NOTION) {
+    // Show a loading state in the grid while fetching
+    document.getElementById("projectsGrid").innerHTML =
+      '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--gray-light);font-size:.9rem">Loading projects...</div>';
+
     await fetchFromNotion();
+
+    // Only show banner if fetch failed and we fell back to samples
+    if (allProjects === SAMPLE_PROJECTS) {
+      banner.style.display = "flex";
+    } else {
+      banner.style.display = "none";
+    }
   } else {
     allProjects = SAMPLE_PROJECTS;
-    document.getElementById("notionBanner").style.display = "flex";
+    banner.style.display = "flex";
   }
+
   updateCounts();
   renderProjects();
 }
 
 // ============================================================
 //  NOTION FETCH
-//  Replace PROXY_URL with your Netlify Function URL.
-//  Ask me to build the Netlify Function when you're ready.
 // ============================================================
 async function fetchFromNotion() {
   const PROXY_URL = "/.netlify/functions/notion-proxy?db=projects";
   try {
     const res = await fetch(PROXY_URL);
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("Notion proxy error", res.status, errText);
+      allProjects = SAMPLE_PROJECTS;
+      return;
+    }
+
     const data = await res.json();
-    allProjects = data.results ? data.results.map(parseNotionPage) : [];
-    document.getElementById("notionBanner").style.display = "none";
-    document.getElementById("notionBanner").style.display = "none";
+
+    if (data.error) {
+      console.error("Notion returned error:", data.error, data.help || "");
+      allProjects = SAMPLE_PROJECTS;
+      return;
+    }
+
+    if (!data.results || data.results.length === 0) {
+      console.warn("Notion returned 0 results for projects DB. Check that the DB is shared with your integration and has rows.");
+      allProjects = SAMPLE_PROJECTS;
+      return;
+    }
+
+    allProjects = data.results.map(parseNotionPage);
+    console.log("Notion projects loaded:", allProjects.length);
+
   } catch(e) {
-    console.warn("Notion fetch failed, using sample data:", e);
+    console.error("Notion fetch failed:", e.message);
     allProjects = SAMPLE_PROJECTS;
   }
 }

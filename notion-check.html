@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Notion Connection Check – The RED Group</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#f8f5f0;font-family:"DM Sans",system-ui,sans-serif;padding:40px 5vw;font-size:15px}
+h1{font-size:1.6rem;margin-bottom:.4rem;color:#fff}
+.subtitle{color:#888;font-size:.88rem;margin-bottom:2.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.2rem}
+.card{background:#1a1a1a;border:1px solid rgba(255,255,255,.07);padding:1.4rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.card-title{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:#888}
+.badge{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .65rem;font-weight:600}
+.badge-ok{background:rgba(34,120,50,.2);color:#4caf6e;border:1px solid rgba(34,120,50,.3)}
+.badge-err{background:rgba(139,0,0,.2);color:#e06060;border:1px solid rgba(139,0,0,.3)}
+.badge-wait{background:rgba(100,100,100,.2);color:#888;border:1px solid rgba(255,255,255,.1)}
+.badge-empty{background:rgba(180,120,0,.2);color:#c8a030;border:1px solid rgba(180,120,0,.3)}
+.result{font-size:.8rem;color:#888;line-height:1.7;margin-top:.5rem;word-break:break-word}
+.result.ok{color:#a8d8b0}
+.result.err{color:#e09090}
+.result.empty{color:#c8a030}
+.count{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;color:#fff;margin:.4rem 0 .2rem}
+.fields{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.field{font-size:.62rem;padding:.18rem .5rem;background:rgba(255,255,255,.05);color:#666;border:1px solid rgba(255,255,255,.07)}
+.run-btn{background:#8B0000;color:#fff;border:none;padding:.7rem 1.8rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:inherit;margin-bottom:2.5rem;transition:background .2s}
+.run-btn:hover{background:#a80000}
+.run-btn:disabled{opacity:.5;cursor:not-allowed}
+.summary{background:#1a1a1a;border:1px solid rgba(255,255,255,.07);padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;gap:3rem;flex-wrap:wrap}
+.sum-item{text-align:center}
+.sum-n{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#fff}
+.sum-l{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-top:.2rem}
+.sum-n.green{color:#4caf6e}
+.sum-n.red{color:#e06060}
+.sum-n.yellow{color:#c8a030}
+</style>
+</head>
+<body>
+
+<h1>Notion Connection Diagnostics</h1>
+<p class="subtitle">Tests every database endpoint used by the site. Delete this file before launch.</p>
+
+<div class="summary">
+  <div class="sum-item"><div class="sum-n" id="sumOk">—</div><div class="sum-l">Connected</div></div>
+  <div class="sum-item"><div class="sum-n" id="sumEmpty">—</div><div class="sum-l">Empty / No rows</div></div>
+  <div class="sum-item"><div class="sum-n" id="sumErr">—</div><div class="sum-l">Errors</div></div>
+  <div class="sum-item"><div class="sum-n" id="sumTotal">—</div><div class="sum-l">Total Databases</div></div>
+</div>
+
+<button class="run-btn" id="runBtn" onclick="runAll()">▶ Run All Checks</button>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const ENDPOINTS = [
+  { db:"projects",      label:"Projects",                 page:"projects.html" },
+  { db:"listings",      label:"Listings (all)",           page:"listings.html" },
+  { db:"sale",          label:"Listings → For Sale",      page:"listings.html" },
+  { db:"rent",          label:"Listings → For Rent",      page:"listings.html" },
+  { db:"testimonials",  label:"Testimonials (all)",       page:"all pages" },
+  { db:"testimonials&division=Brokerage",   label:"Testimonials – Brokerage",    page:"brokerage.html" },
+  { db:"testimonials&division=Management", label:"Testimonials – Management",   page:"property-management.html" },
+  { db:"testimonials&division=Design",     label:"Testimonials – Design",       page:"design.html" },
+  { db:"testimonials&division=Development",label:"Testimonials – Development",  page:"development.html" },
+  { db:"indexhero",     label:"Homepage Hero Config",     page:"index.html" },
+  { db:"indexstats",    label:"Homepage Stats",           page:"index.html" },
+  { db:"brokeragepage", label:"Brokerage Page Config",    page:"brokerage.html" },
+  { db:"pmstats",       label:"PM Stats",                 page:"property-management.html" },
+  { db:"devmetrics",    label:"Dev Hero Metrics",         page:"development.html" },
+  { db:"devstats",      label:"Dev Stats Bar",            page:"development.html" },
+  { db:"team",          label:"Team Members",             page:"about.html" },
+  { db:"stats",         label:"Stats (alias)",            page:"about.html" },
+];
+
+function makeCard(ep) {
+  return `
+    <div class="card" id="card-${ep.db.replace(/[^a-z]/g,'_')}">
+      <div class="card-header">
+        <div class="card-title">${ep.label}</div>
+        <span class="badge badge-wait" id="badge-${ep.db.replace(/[^a-z]/g,'_')}">Pending</span>
+      </div>
+      <div class="result" id="result-${ep.db.replace(/[^a-z]/g,'_')}">?db=${ep.db} &nbsp;·&nbsp; ${ep.page}</div>
+    </div>`;
+}
+
+async function checkEndpoint(ep) {
+  const key = ep.db.replace(/[^a-z]/g,'_');
+  const badge  = document.getElementById(`badge-${key}`);
+  const result = document.getElementById(`result-${key}`);
+
+  badge.className = "badge badge-wait";
+  badge.textContent = "Checking...";
+  result.className = "result";
+  result.textContent = "Fetching...";
+
+  try {
+    const res = await fetch(`/.netlify/functions/notion-proxy?db=${ep.db}`);
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e) {
+      badge.className = "badge badge-err";
+      badge.textContent = "Parse Error";
+      result.className = "result err";
+      result.textContent = `HTTP ${res.status} — Response is not JSON:\n${text.substring(0,200)}`;
+      return "err";
+    }
+
+    if (!res.ok || data.error) {
+      badge.className = "badge badge-err";
+      badge.textContent = `Error ${res.status}`;
+      result.className = "result err";
+      result.textContent = data.error || `HTTP ${res.status}`;
+      if (data.help) result.textContent += `\n→ ${data.help}`;
+      if (data.configured) result.textContent += `\nConfigured DBs: ${data.configured.join(', ')}`;
+      return "err";
+    }
+
+    const count = data.results?.length ?? "?";
+
+    if (count === 0) {
+      badge.className = "badge badge-empty";
+      badge.textContent = "0 rows";
+      result.className = "result empty";
+      result.textContent = `Connected ✓ but database has 0 rows.\nMake sure you've added records AND shared the database with your Notion integration.`;
+      return "empty";
+    }
+
+    // Show field names from first result
+    const fields = data.results?.[0] ? Object.keys(data.results[0].properties || {}) : [];
+    badge.className = "badge badge-ok";
+    badge.textContent = `${count} rows`;
+    result.className = "result ok";
+    result.innerHTML = `✓ Connected &amp; returning data<br>
+      <span style="color:#666">Fields: ${fields.join(', ')}</span>`;
+    return "ok";
+
+  } catch(e) {
+    badge.className = "badge badge-err";
+    badge.textContent = "Network Error";
+    result.className = "result err";
+    result.textContent = `Could not reach /.netlify/functions/notion-proxy\n${e.message}\nMake sure you're viewing this on your live Netlify site, not locally.`;
+    return "err";
+  }
+}
+
+async function runAll() {
+  const btn = document.getElementById("runBtn");
+  btn.disabled = true;
+  btn.textContent = "Running...";
+
+  // Reset summary
+  ["sumOk","sumEmpty","sumErr","sumTotal"].forEach(id => {
+    document.getElementById(id).textContent = "—";
+  });
+
+  const results = await Promise.all(ENDPOINTS.map(checkEndpoint));
+
+  const ok    = results.filter(r=>r==="ok").length;
+  const empty = results.filter(r=>r==="empty").length;
+  const err   = results.filter(r=>r==="err").length;
+
+  document.getElementById("sumOk").textContent    = ok;
+  document.getElementById("sumOk").className      = "sum-n green";
+  document.getElementById("sumEmpty").textContent  = empty;
+  document.getElementById("sumEmpty").className    = "sum-n yellow";
+  document.getElementById("sumErr").textContent   = err;
+  document.getElementById("sumErr").className     = "sum-n" + (err > 0 ? " red" : " green");
+  document.getElementById("sumTotal").textContent  = ENDPOINTS.length;
+
+  btn.disabled = false;
+  btn.textContent = "▶ Run Again";
+}
+
+// Build cards
+document.getElementById("grid").innerHTML = ENDPOINTS.map(makeCard).join("");
+</script>
+</body>
+</html>

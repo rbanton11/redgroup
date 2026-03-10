@@ -457,21 +457,25 @@ let allListings = { sale: [], rent: [] };
 //  INIT
 // ============================================================
 async function init() {
+  const banner = document.getElementById("notionBanner");
+
   if (CONFIG.USE_NOTION) {
     await fetchFromNotion();
+
+    if (allListings === SAMPLE_LISTINGS) {
+      banner.style.display = "flex";
+    } else {
+      banner.style.display = "none";
+    }
   } else {
     allListings = SAMPLE_LISTINGS;
-    document.getElementById("notionBanner").style.display = "flex";
-  }
-  updateCounts();
-  renderListings();
+    banner.style.display = "flex";
   }
 
-// ============================================================
-//  NOTION FETCH (active when USE_NOTION = true)
-//  Replace PROXY_URL with your Netlify Function or
-//  Cloudflare Worker URL once deployed.
-// ============================================================
+  updateCounts();
+  renderListings();
+}
+
 async function fetchFromNotion() {
   const PROXY_URL = "/.netlify/functions/notion-proxy";
   try {
@@ -479,13 +483,31 @@ async function fetchFromNotion() {
       fetch(PROXY_URL + "?db=sale"),
       fetch(PROXY_URL + "?db=rent")
     ]);
+
+    if (!saleRes.ok || !rentRes.ok) {
+      console.error("Notion proxy error", saleRes.status, rentRes.status);
+      allListings = SAMPLE_LISTINGS;
+      return;
+    }
+
     const saleData = await saleRes.json();
     const rentData = await rentRes.json();
-    allListings.sale = saleData.results ? saleData.results.map(parseNotionPage) : [];
-    allListings.rent = rentData.results ? rentData.results.map(parseNotionPage) : [];
-    document.getElementById("notionBanner").style.display = "none";
+
+    if (saleData.error || rentData.error) {
+      console.error("Notion error:", saleData.error || rentData.error,
+        saleData.help || rentData.help || "");
+      allListings = SAMPLE_LISTINGS;
+      return;
+    }
+
+    allListings = {
+      sale: saleData.results ? saleData.results.map(parseNotionPage) : [],
+      rent: rentData.results ? rentData.results.map(parseNotionPage) : []
+    };
+    console.log("Notion listings loaded — sale:", allListings.sale.length, "rent:", allListings.rent.length);
+
   } catch(e) {
-    console.warn("Notion fetch failed, falling back to sample data:", e);
+    console.error("Notion fetch failed:", e.message);
     allListings = SAMPLE_LISTINGS;
   }
 }
