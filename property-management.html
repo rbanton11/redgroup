@@ -169,6 +169,8 @@ footer .logo-img{height:36px;}
     <a href="design.html">Design</a>
     <a href="development.html">Development</a>
     <a href="listings.html">Listings</a>
+    <a href="projects.html">Projects</a>
+    <a href="about.html">About</a>
     <a href="#contact" class="btn-nav">Get Your Property Managed</a>
   </nav>
 </header>
@@ -351,7 +353,7 @@ footer .logo-img{height:36px;}
   <div class="why-us">
     <div class="why-img ">
       <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=80" alt="Property management" />
-      <div class="why-stats">
+      <div class="why-stats" id="pmStatsGrid">
         <div class="why-stat"><div class="why-stat-n">98%</div><div class="why-stat-l">Avg. Occupancy Rate</div></div>
         <div class="why-stat"><div class="why-stat-n">18h</div><div class="why-stat-l">Avg. Maintenance Response</div></div>
         <div class="why-stat"><div class="why-stat-n">21d</div><div class="why-stat-l">Avg. Days to Place Tenant</div></div>
@@ -399,23 +401,7 @@ footer .logo-img{height:36px;}
 <section class="testimonials">
   <div class="section-label ">Owner Stories</div>
   <h2 class="">What Property Owners Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"I was self-managing 4 units and burning out. The RED Group took over everything. Now I get a clean monthly statement and a direct deposit. Zero stress."</p>
-      <div class="testi-author"><div class="avatar">TL</div><div><div class="author-name">Tanya L.</div><div class="author-role">4-Unit Owner · Decatur, GA</div></div></div>
-    </div>
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"They placed a qualified tenant in my rental in 17 days — higher rent than I was getting before. The screening process is thorough and professional."</p>
-      <div class="testi-author"><div class="avatar">BH</div><div><div class="author-name">Bernard H.</div><div class="author-role">Landlord · Lawrenceville, GA</div></div></div>
-    </div>
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"A maintenance emergency at 11pm was handled by the next morning. I didn't have to do a thing. That's the level of service they deliver."</p>
-      <div class="testi-author"><div class="avatar">SP</div><div><div class="author-name">Sandra P.</div><div class="author-role">Investment Property Owner</div></div></div>
-    </div>
-  </div>
+  <div class="testi-grid" id="pmTestiGrid"><!-- Injected by JS --></div>
 </section>
 
 <!-- CONTACT -->
@@ -486,9 +472,109 @@ footer .logo-img{height:36px;}
       <div class="footer-socials"><a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a></div>
     </div>
     <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
-    <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
     <div class="footer-col"><h4>Contact</h4><a href="#">706-363-0211</a><a href="#"><span class="__cf_email__" data-cfemail="c8a1a6aea788baadacafbaa7bdb8afa9e6aba7a5">[email&#160;protected]</span></a><a href="#">Athens, Georgia</a></div>
   </div>
   <div class="footer-bottom">
     <p>© 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker. &nbsp;|&nbsp; GA Brokerage License #82466</p>
     <p>GA Br
+
+<script>
+// ============================================================
+//  NOTION CONFIG — Property Management Page
+//
+//  [1] PM_STATS DB  (or use SITE_CONFIG)
+//    Name (title)  → label e.g. "Avg. Occupancy Rate"
+//    Value (text)  → e.g. "98%"
+//    Order (number)→ 1-4
+//
+//  [2] TESTIMONIALS DB — shared DB, filter Division = "Management"
+//    Name, Quote, Role, Stars, Active, Order, Division
+//
+//  Proxy endpoints:
+//    /.netlify/functions/notion-proxy?db=pmstats
+//    /.netlify/functions/notion-proxy?db=testimonials&division=Management
+// ============================================================
+const PM_CONFIG = { USE_NOTION: true };
+
+const PM_FALLBACK_STATS = [
+  { value:"98%",  label:"Avg. Occupancy Rate" },
+  { value:"18h",  label:"Avg. Maintenance Response" },
+  { value:"21d",  label:"Avg. Days to Place Tenant" },
+  { value:"$0",   label:"Hidden Fees" }
+];
+
+const PM_FALLBACK_TESTI = [
+  { name:"Tanya L.", initials:"TL", role:"4-Unit Owner · Decatur, GA", stars:5,
+    quote:"I was self-managing 4 units and burning out. The RED Group took over everything. Now I get a clean monthly statement and a direct deposit. Zero stress." },
+  { name:"Bernard H.", initials:"BH", role:"Landlord · Lawrenceville, GA", stars:5,
+    quote:"They placed a qualified tenant in my rental in 17 days — higher rent than I was getting before. The screening process is thorough and professional." },
+  { name:"Sandra P.", initials:"SP", role:"Investment Property Owner", stars:5,
+    quote:"A maintenance emergency at 11pm was handled by the next morning. I didn't have to do a thing. That's the level of service they deliver." }
+];
+
+async function loadPMData() {
+  let stats = PM_FALLBACK_STATS;
+  let testimonials = PM_FALLBACK_TESTI;
+
+  if (PM_CONFIG.USE_NOTION) {
+    try {
+      const [sRes, tRes] = await Promise.all([
+        fetch("/.netlify/functions/notion-proxy?db=pmstats"),
+        fetch("/.netlify/functions/notion-proxy?db=testimonials&division=Management")
+      ]);
+      const sData = await sRes.json();
+      const tData = await tRes.json();
+
+      if (sData.results?.length) {
+        stats = sData.results
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({ value: p.properties.Value?.rich_text?.[0]?.plain_text||"", label: p.properties.Name?.title?.[0]?.plain_text||"" }));
+      }
+      if (tData.results?.length) {
+        testimonials = tData.results
+          .filter(p=>p.properties.Active?.checkbox!==false)
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({
+            name: p.properties.Name?.title?.[0]?.plain_text||"",
+            initials: (p.properties.Name?.title?.[0]?.plain_text||"??").split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase(),
+            role: p.properties.Role?.rich_text?.[0]?.plain_text||"",
+            stars: p.properties.Stars?.number||5,
+            quote: p.properties.Quote?.rich_text?.[0]?.plain_text||""
+          }));
+      }
+    } catch(e){ console.warn("Notion unavailable", e); }
+  }
+
+  renderPMStats(stats);
+  renderPMTestimonials(testimonials);
+}
+
+function renderPMStats(list) {
+  const g = document.getElementById("pmStatsGrid");
+  if (!g||!list.length) return;
+  g.innerHTML = list.map(s=>`<div class="why-stat"><div class="why-stat-n">${s.value}</div><div class="why-stat-l">${s.label}</div></div>`).join("");
+}
+
+function renderPMTestimonials(list) {
+  const g = document.getElementById("pmTestiGrid");
+  if (!g) return;
+  g.innerHTML = list.map(t=>`
+    <div class="testi-card">
+      <div class="stars">${"★".repeat(t.stars)}</div>
+      <p class="testi-text">"${t.quote}"</p>
+      <div class="testi-author">
+        <div class="avatar">${t.initials}</div>
+        <div><div class="author-name">${t.name}</div><div class="author-role">${t.role}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+window.addEventListener("scroll", () => {
+  document.querySelector("header").style.boxShadow = window.scrollY > 20 ? "0 4px 32px rgba(0,0,0,.5)" : "none";
+});
+
+loadPMData();
+</script>
+</body>
+</html>

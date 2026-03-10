@@ -50,6 +50,8 @@ footer .logo-img{height:36px;}
     <a href="design.html" class="active">Design</a>
     <a href="development.html">Development</a>
     <a href="listings.html">Listings</a>
+    <a href="projects.html">Projects</a>
+    <a href="about.html">About</a>
     <a href="#contact" class="btn-nav">Request a Consultation</a>
   </nav>
 </header>
@@ -169,10 +171,7 @@ footer .logo-img{height:36px;}
 <section class="testimonials" style="background:var(--gray-dark)">
   <div class="section-label ">Partner Stories</div>
   <h2 class="">What Developers &amp; Investors Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card "><div class="stars">★★★★★</div><p class="testi-text">"Before we engaged an architect, The RED Group reviewed our parcel and rethought our unit mix entirely. That one conversation probably added $180K to the project's projected return."</p><div class="testi-author"><div class="avatar">DK</div><div><div class="author-name">David K.</div><div class="author-role">Developer · Gwinnett County, GA</div></div></div></div>
-    <div class="testi-card "><div class="stars">★★★★★</div><p class="testi-text">"I brought them in to review the site plan and finish specs on a 10-unit build. They flagged two issues our GC had missed and recommended value engineering that saved $40K in hard costs."</p><div class="testi-author"><div class="avatar">MF</div><div><div class="author-name">Marcus F.</div><div class="author-role">Investor · Atlanta Metro, GA</div></div></div></div>
-  </div>
+  <div class="testi-grid" id="designTestiGrid"><!-- Injected by JS --></div>
 </section>
 
 <section id="contact">
@@ -232,9 +231,74 @@ footer .logo-img{height:36px;}
       <div class="footer-socials"><a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a></div>
     </div>
     <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
-    <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
     <div class="footer-col"><h4>Contact</h4><a href="#">706-363-0211</a><a href="#"><span class="__cf_email__" data-cfemail="bdd4d3dbd2fdcfd8d9dacfd2c8cddadc93ded2d0">[email&#160;protected]</span></a><a href="#">Athens, Georgia</a><a href="#">Schedule a Consultation</a></div>
   </div>
   <div class="footer-bottom">
     <p>&copy; 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker. &nbsp;|&nbsp; GA Brokerage License #82466</p>
-    <p>GA Brokerage License
+    <p>GA Brokerage Licens
+<script>
+// ============================================================
+//  NOTION CONFIG — Design Page
+//
+//  TESTIMONIALS DB — shared DB, filter Division = "Design"
+//    Name, Quote, Role, Stars, Active, Order, Division
+//
+//  Proxy endpoint:
+//    /.netlify/functions/notion-proxy?db=testimonials&division=Design
+// ============================================================
+const DESIGN_CONFIG = { USE_NOTION: true };
+
+const DESIGN_FALLBACK_TESTI = [
+  { name:"David K.", initials:"DK", role:"Developer · Gwinnett County, GA", stars:5,
+    quote:"Before we engaged an architect, The RED Group reviewed our parcel and rethought our unit mix entirely. That one conversation probably added $180K to the project's projected return." },
+  { name:"Marcus F.", initials:"MF", role:"Investor · Atlanta Metro, GA", stars:5,
+    quote:"I brought them in to review the site plan and finish specs on a 10-unit build. They flagged two issues our GC had missed and recommended value engineering that saved $40K in hard costs." }
+];
+
+async function loadDesignData() {
+  let testimonials = DESIGN_FALLBACK_TESTI;
+
+  if (DESIGN_CONFIG.USE_NOTION) {
+    try {
+      const res = await fetch("/.netlify/functions/notion-proxy?db=testimonials&division=Design");
+      const data = await res.json();
+      if (data.results?.length) {
+        testimonials = data.results
+          .filter(p=>p.properties.Active?.checkbox!==false)
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({
+            name: p.properties.Name?.title?.[0]?.plain_text||"",
+            initials: (p.properties.Name?.title?.[0]?.plain_text||"??").split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase(),
+            role: p.properties.Role?.rich_text?.[0]?.plain_text||"",
+            stars: p.properties.Stars?.number||5,
+            quote: p.properties.Quote?.rich_text?.[0]?.plain_text||""
+          }));
+      }
+    } catch(e){ console.warn("Notion unavailable", e); }
+  }
+  renderDesignTestimonials(testimonials);
+}
+
+function renderDesignTestimonials(list) {
+  const g = document.getElementById("designTestiGrid");
+  if (!g) return;
+  g.innerHTML = list.map(t=>`
+    <div class="testi-card">
+      <div class="stars">${"★".repeat(t.stars)}</div>
+      <p class="testi-text">"${t.quote}"</p>
+      <div class="testi-author">
+        <div class="avatar">${t.initials}</div>
+        <div><div class="author-name">${t.name}</div><div class="author-role">${t.role}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+window.addEventListener("scroll", () => {
+  document.querySelector("header").style.boxShadow = window.scrollY > 20 ? "0 4px 32px rgba(0,0,0,.5)" : "none";
+});
+
+loadDesignData();
+</script>
+</body>
+</html>

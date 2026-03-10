@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Projects – The RED Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--red:#8B0000;--red-mid:#a80000;--red-glow:rgba(139,0,0,0.18);--black:#0d0d0d;--gray-dark:#1a1a1a;--gray-mid:#2e2e2e;--gray-light:#888;--white:#f8f5f0;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:300;overflow-x:hidden}
+header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:72px;background:rgba(13,13,13,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(139,0,0,.25);transition:box-shadow .3s}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-img{height:42px;width:auto;display:block}
+nav{display:flex;gap:2.2rem;align-items:center}
+nav a{color:var(--gray-light);text-decoration:none;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+nav a:hover,nav a.active{color:var(--white)}
+.btn-nav{background:var(--red);color:var(--white);padding:.5rem 1.4rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background .2s}
+.btn-nav:hover{background:var(--red-mid)}
+
+/* HERO */
+.page-hero{padding:140px 5vw 70px;position:relative;overflow:hidden;background:var(--gray-dark)}
+.page-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 90% 50%,rgba(139,0,0,.12) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:3rem}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--red)}
+h1{font-family:var(--serif);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:900;line-height:1.05;color:var(--white)}
+h1 em{font-style:italic;color:var(--red)}
+.hero-desc{font-size:.95rem;color:var(--gray-light);line-height:1.75;margin-top:1rem;max-width:420px}
+.hero-stats{display:flex;gap:2.5rem;justify-content:flex-end;align-items:flex-end;flex-wrap:wrap}
+.hstat{text-align:right}
+.hstat-n{font-family:var(--serif);font-size:2.2rem;font-weight:900;color:var(--white);line-height:1}
+.hstat-l{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-light);margin-top:.3rem}
+
+/* FILTER BAR */
+.filter-bar{background:var(--black);border-bottom:1px solid rgba(255,255,255,.07);padding:0 5vw;position:sticky;top:72px;z-index:90}
+.filter-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;padding:.8rem 0}
+.division-tabs{display:flex;gap:0;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.3rem;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-family:var(--sans);font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.1);border-right:none;background:transparent;color:var(--gray-light);transition:background .2s,color .2s,border-color .2s}
+.tab-btn:last-child{border-right:1px solid rgba(255,255,255,.1)}
+.tab-btn.active{background:var(--red);color:var(--white);border-color:var(--red)}
+.tab-btn:hover:not(.active){color:var(--white);border-color:rgba(255,255,255,.3)}
+.filters-right{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.filter-select{padding:.5rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--gray-light);font-family:var(--sans);font-size:.78rem;outline:none;cursor:pointer;transition:border-color .2s}
+.filter-select:focus{border-color:var(--red)}
+.filter-count{font-size:.78rem;color:var(--gray-light);white-space:nowrap}
+.filter-count span{color:var(--white);font-weight:500}
+
+/* PROJECTS GRID */
+.projects-section{padding:50px 5vw 100px}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+
+/* PROJECT CARD */
+.proj-card{background:var(--gray-dark);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.proj-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.card-img{position:relative;aspect-ratio:16/9;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;filter:brightness(.8)}
+.proj-card:hover .card-img img{transform:scale(1.05)}
+.card-badges{position:absolute;top:12px;left:12px;display:flex;gap:.5rem;flex-wrap:wrap}
+.badge{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .7rem;font-weight:500}
+.badge-division{background:var(--red);color:var(--white)}
+.badge-status{color:var(--white)}
+.badge-status.active{background:rgba(34,120,50,.85)}
+.badge-status.completed{background:rgba(50,100,180,.85)}
+.badge-status.pipeline{background:rgba(150,100,0,.85)}
+.badge-status.under-contract{background:rgba(120,60,160,.85)}
+.card-body{padding:1.4rem 1.5rem 1.2rem;flex:1;display:flex;flex-direction:column;gap:.5rem}
+.card-division-label{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.card-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.25}
+.card-location{font-size:.82rem;color:var(--gray-light);margin-top:.1rem}
+.card-specs{display:flex;gap:1.2rem;margin-top:.6rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.spec{font-size:.78rem;color:var(--gray-light);display:flex;align-items:center;gap:.3rem}
+.spec strong{color:var(--white);font-weight:500}
+.card-desc{font-size:.82rem;color:var(--gray-light);line-height:1.65;margin-top:.4rem;flex:1}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.06)}
+.card-cta{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.4rem;transition:gap .2s}
+.card-cta:hover{gap:.8rem}
+.card-year{font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:.06em}
+
+/* EMPTY STATE */
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 2rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem}
+.empty-icon{font-size:2.5rem;opacity:.3}
+.empty-state h3{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:rgba(255,255,255,.4)}
+.empty-state p{font-size:.88rem;color:rgba(255,255,255,.25);max-width:320px;line-height:1.6}
+
+/* NOTION BANNER */
+.notion-banner{background:rgba(139,0,0,.08);border:1px solid rgba(139,0,0,.25);padding:1.2rem 2rem;margin:0 5vw 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.notion-banner-icon{font-size:1.4rem;flex-shrink:0}
+.notion-banner strong{font-size:.88rem;color:var(--white);display:block;margin-bottom:.2rem}
+.notion-banner p{font-size:.8rem;color:var(--gray-light);line-height:1.5;flex:1}
+.notion-banner a{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);text-decoration:none;white-space:nowrap}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--gray-dark);max-width:820px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.08);border:none;color:var(--white);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;z-index:1;transition:background .2s}
+.modal-close:hover{background:var(--red)}
+.modal-img{aspect-ratio:16/9;overflow:hidden}
+.modal-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+.modal-body{padding:2rem 2.2rem 2.5rem}
+.modal-badges{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.modal-title{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:var(--white);line-height:1.1;margin-bottom:.4rem}
+.modal-location{font-size:.9rem;color:var(--gray-light);margin-bottom:1.5rem}
+.modal-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);margin-bottom:1.8rem}
+.modal-spec{background:var(--gray-dark);padding:.9rem 1rem;text-align:center}
+.modal-spec-val{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--white)}
+.modal-spec-label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-light);margin-top:.25rem}
+.modal-desc{font-size:.9rem;color:var(--gray-light);line-height:1.8;margin-bottom:1.5rem}
+.modal-highlights{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:2rem}
+.modal-highlight{display:flex;align-items:center;gap:.7rem;font-size:.85rem;color:var(--gray-light)}
+.modal-highlight::before{content:"→";color:var(--red);flex-shrink:0}
+.modal-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:var(--white);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;border:none;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.btn-primary:hover{background:var(--red-mid)}
+.btn-outline-sm{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;cursor:pointer;font-family:var(--sans);transition:border-color .2s}
+.btn-outline-sm:hover{border-color:var(--white)}
+
+/* CTA STRIP */
+.cta-strip{background:var(--red);padding:60px 5vw;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.cta-strip h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:var(--white)}
+.cta-strip p{color:rgba(255,255,255,.75);font-size:.95rem;margin-top:.5rem}
+.btn-white{background:var(--white);color:var(--black);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-block}
+
+/* FOOTER */
+footer{background:#0a0a0a;padding:60px 5vw 30px;border-top:1px solid rgba(255,255,255,.07)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{font-size:.88rem;color:var(--gray-light);line-height:1.7;margin:1rem 0 1.5rem;max-width:260px}
+.footer-socials{display:flex;gap:.8rem}
+.social-link{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--gray-light);text-decoration:none;transition:border-color .2s,color .2s}
+.social-link:hover{border-color:var(--red);color:var(--white)}
+.footer-col h4{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:1.2rem}
+.footer-col a{display:block;font-size:.85rem;color:var(--gray-light);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.78rem;color:var(--gray-light)}
+
+@media(max-width:900px){nav{display:none}.hero-inner{grid-template-columns:1fr}.hero-stats{justify-content:flex-start}.projects-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}.division-tabs{gap:.3rem}.tab-btn{border:1px solid rgba(255,255,255,.1)}}
+@media(max-width:600px){.projects-grid{grid-template-columns:1fr}.modal-specs{grid-template-columns:1fr 1fr}.modal-highlights{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="The RED Group" class="logo-img"/>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="brokerage.html">Brokerage</a>
+    <a href="property-management.html">Management</a>
+    <a href="design.html">Design</a>
+    <a href="development.html">Development</a>
+    <a href="listings.html">Listings</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="about.html">About</a>
+    <a href="#contact" class="btn-nav">Schedule a Consultation</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Our Work</div>
+      <h1>Past, Active &amp;<br><em>Future</em> Projects.</h1>
+      <p class="hero-desc">Every project we've touched across brokerage, property management, design consulting, and land development — tracked from pipeline to completion.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n" id="activeCount">0</div><div class="hstat-l">Active</div></div>
+      <div class="hstat"><div class="hstat-n" id="completedCount">0</div><div class="hstat-l">Completed</div></div>
+      <div class="hstat"><div class="hstat-n" id="pipelineCount">0</div><div class="hstat-l">Pipeline</div></div>
+      <div class="hstat"><div class="hstat-n" id="totalCount">0</div><div class="hstat-l">Total</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="division-tabs">
+      <button class="tab-btn active" data-division="all" onclick="switchDivision('all')">All</button>
+      <button class="tab-btn" data-division="Brokerage" onclick="switchDivision('Brokerage')">Brokerage</button>
+      <button class="tab-btn" data-division="Development" onclick="switchDivision('Development')">Development</button>
+      <button class="tab-btn" data-division="Design" onclick="switchDivision('Design')">Design</button>
+      <button class="tab-btn" data-division="Management" onclick="switchDivision('Management')">Management</button>
+    </div>
+    <div class="filters-right">
+      <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+        <option value="">All Statuses</option>
+        <option value="Active">Active</option>
+        <option value="Completed">Completed</option>
+        <option value="Pipeline">Pipeline</option>
+        <option value="Under Contract">Under Contract</option>
+      </select>
+      <select class="filter-select" id="filterYear" onchange="applyFilters()">
+        <option value="">All Years</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+      </select>
+      <div class="filter-count">Showing <span id="showingCount">0</span> projects</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTION BANNER -->
+<div class="notion-banner" id="notionBanner">
+  <div class="notion-banner-icon">📋</div>
+  <div>
+    <strong>Connect Your Notion Database</strong>
+    <p>Projects below are sample data. To pull live projects from Notion, add your credentials to the CONFIG section in the script. See setup guide in code comments.</p>
+  </div>
+  <a href="#" onclick="document.getElementById('notionBanner').style.display='none';return false;">Dismiss</a>
+</div>
+
+<!-- PROJECTS -->
+<section class="projects-section">
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip" id="contact">
+  <div>
+    <h2>Have a Project in Mind?</h2>
+    <p>Whether you're buying, selling, building, or investing — let's talk about what's possible.</p>
+  </div>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="development.html" class="btn-white">Development Services</a>
+    <a href="index.html#contact" style="background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.4);padding:.85rem 2rem;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none">Contact Us</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom:.8rem;display:inline-flex">
+        <img src="images/logo.png" alt="The RED Group" class="logo-img" style="height:36px"/>
+      </a>
+      <p>Georgia's full-service real estate firm. Brokerage, property management, design, and development.</p>
+      <div class="footer-socials"><a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a></div>
+    </div>
+    <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
+    <div class="footer-col"><h4>Portfolio</h4><a href="projects.html">All Projects</a><a href="listings.html">For Sale</a><a href="listings.html">For Rent</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:7063630211">706-363-0211</a><a href="/cdn-cgi/l/email-protection#026b6c646d4270676665706d777265632c616d6f"><span class="__cf_email__" data-cfemail="6b02050d042b190e0f0c19041e1b0c0a45080406">[email&#160;protected]</span></a><a href="#">Athens, Georgia</a></div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker. &nbsp;|&nbsp; GA Brokerage License #82466</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalDirect()">&#x2715;</button>
+    <div class="modal-img"><img id="modalImg" src="" alt=""/></div>
+    <div class="modal-body">
+      <div class="modal-badges" id="modalBadges"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-location" id="modalLocation"></div>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-highlights" id="modalHighlights"></div>
+      <div class="modal-ctas">
+        <a href="#contact" class="btn-primary" onclick="closeModalDirect()">Discuss This Project</a>
+        <a href="development.html" class="btn-outline-sm">Development Services</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ============================================================
+//  NOTION CONFIGURATION
+//
+//  Set up a Notion database with these properties:
+//    - Name (title)          → project name
+//    - Division (select)     → "Brokerage", "Development", "Design", "Management"
+//    - Status (select)       → "Active", "Completed", "Pipeline", "Under Contract"
+//    - Location (text)       → city, state
+//    - Year (number)         → e.g. 2024
+//    - Value (text)          → e.g. "$1.2M" or "34% ROI"
+//    - ValueLabel (text)     → e.g. "Project Value" or "ROI"
+//    - Units (text)          → e.g. "14 Units" (optional)
+//    - SqFt (text)           → e.g. "8,400 sqft" (optional)
+//    - Description (text)    → project description
+//    - Highlights (text)     → comma-separated bullet points
+//    - Image (url)           → direct image URL
+//
+//  const CONFIG = {
+//    NOTION_API_KEY: "secret_xxxxxxxxxxxxxxxxxxxx",
+//    PROJECTS_DATABASE_ID: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+//    USE_NOTION: true
+//  };
+//
+//  You'll need a Netlify Function proxy — ask me to build it.
+// ============================================================
+
+const CONFIG = { USE_NOTION: true };
+
+// ============================================================
+//  SAMPLE PROJECTS — edit until Notion is connected
+// ============================================================
+const SAMPLE_PROJECTS = [
+  {
+    id: 1,
+    name: "Southside Residential Redevelopment",
+    division: "Development",
+    status: "Active",
+    location: "Atlanta Metro, GA",
+    year: 2025,
+    value: "$1.8M", valueLabel: "Project Value",
+    units: "6 Units", sqft: "7,200 sqft",
+    description: "Ground-up residential infill development on assembled parcels in an emerging south Atlanta corridor. Includes land acquisition, entitlement, and construction management through to sell-through.",
+    highlights: ["Land acquisition complete","Entitlement in progress","6-unit townhome product","PE-designed site layout","Brokerage exit strategy integrated"],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80"
+  },
+  {
+    id: 2,
+    name: "Gwinnett Mixed-Use Corridor",
+    division: "Development",
+    status: "Pipeline",
+    location: "Gwinnett County, GA",
+    year: 2025,
+    value: "$3.2M", valueLabel: "Projected Value",
+    units: "12 Units + Retail", sqft: "14,000 sqft",
+    description: "Mixed-use development along a high-traffic Gwinnett corridor. Ground-floor retail with residential units above. Currently in site selection and zoning analysis phase.",
+    highlights: ["Site selection underway","Zoning pre-application filed","Retail + residential mix","Transit-adjacent location","Investor syndication planned"],
+    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80"
+  },
+  {
+    id: 3,
+    name: "Decatur Single-Family Flip",
+    division: "Development",
+    status: "Completed",
+    location: "Decatur, GA",
+    year: 2024,
+    value: "34% ROI", valueLabel: "Return on Investment",
+    units: "1 Unit", sqft: "1,840 sqft",
+    description: "Acquisition, full renovation, and resale of a distressed single-family property in Decatur. Complete scope including structural, mechanical, and finish-level upgrades. Sold above ask within 9 days.",
+    highlights: ["Acquired off-market","Full gut renovation","Sold above list price","9 days to contract","34% ROI on total invested capital"],
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80"
+  },
+  {
+    id: 4,
+    name: "Clayton County Multi-Family",
+    division: "Development",
+    status: "Active",
+    location: "Clayton County, GA",
+    year: 2025,
+    value: "$920K", valueLabel: "Project Value",
+    units: "6 Units", sqft: "5,400 sqft",
+    description: "New construction 6-unit rental community on a single assembled parcel. Designed for long-term hold as a cash-flowing rental portfolio asset. PE-stamped site plan and utility coordination complete.",
+    highlights: ["PE-stamped site plan","Utility coordination complete","Designed for rental hold","8.2% projected cap rate","Construction start Q2 2025"],
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80"
+  },
+  {
+    id: 5,
+    name: "Athens Single-Family Buyer Rep",
+    division: "Brokerage",
+    status: "Completed",
+    location: "Athens, GA",
+    year: 2024,
+    value: "$287K", valueLabel: "Purchase Price",
+    units: "1 Unit", sqft: "1,650 sqft",
+    description: "Buyer representation for first-time investor purchasing a single-family rental property in Athens. Full service from offer strategy through inspection, negotiation, and close.",
+    highlights: ["Negotiated $14K below list","Inspection contingency protected","Closed in 28 days","Property cash-flows from day 1","Ongoing management referral"],
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=80"
+  },
+  {
+    id: 6,
+    name: "Oconee County Land Acquisition",
+    division: "Brokerage",
+    status: "Completed",
+    location: "Oconee County, GA",
+    year: 2024,
+    value: "$195K", valueLabel: "Land Purchase Price",
+    units: "4.2 Acres", sqft: "—",
+    description: "Represented buyer in acquisition of raw land parcel for future residential development. Coordinated zoning research, soil analysis, and utility feasibility as part of due diligence.",
+    highlights: ["4.2 acres raw land","Zoning analysis completed","Utility feasibility confirmed","Negotiated seller concessions","Development design consultation included"],
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80"
+  },
+  {
+    id: 7,
+    name: "Madison Avenue Rental Portfolio",
+    division: "Management",
+    status: "Active",
+    location: "Athens, GA",
+    year: 2024,
+    value: "98% Occupancy", valueLabel: "Current Occupancy",
+    units: "8 Units", sqft: "—",
+    description: "Full property management for an 8-unit scattered-site residential portfolio in Athens. Tenant sourcing, lease administration, maintenance coordination, and monthly investor reporting.",
+    highlights: ["8 units under management","98% occupancy maintained","18-hour maintenance response","Monthly owner reports","Rent collected on-time 100%"],
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=80"
+  },
+  {
+    id: 8,
+    name: "Infill Site Design Consultation",
+    division: "Design",
+    status: "Completed",
+    location: "Commerce, GA",
+    year: 2024,
+    value: "+$220K", valueLabel: "Added Project Value",
+    units: "4 Units", sqft: "3,800 sqft",
+    description: "Development design consulting engagement for a 4-unit infill project. Revised unit mix and site layout based on PE analysis and submarket comps, adding significant value before architecture was commissioned.",
+    highlights: ["Site layout redesigned","Unit mix optimized for market","Finish package specified","Pro forma updated pre-architecture","PE site feasibility review"],
+    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=900&q=80"
+  }
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let allProjects = [];
+let currentDivision = "all";
+
+// ============================================================
+//  INIT
+// ============================================================
+async function init() {
+  if (CONFIG.USE_NOTION) {
+    await fetchFromNotion();
+  } else {
+    allProjects = SAMPLE_PROJECTS;
+    document.getElementById("notionBanner").style.display = "flex";
+  }
+  updateCounts();
+  renderProjects();
+}
+
+// ============================================================
+//  NOTION FETCH
+//  Replace PROXY_URL with your Netlify Function URL.
+//  Ask me to build the Netlify Function when you're ready.
+// ============================================================
+async function fetchFromNotion() {
+  const PROXY_URL = "/.netlify/functions/notion-proxy?db=projects";
+  try {
+    const res = await fetch(PROXY_URL);
+    const data = await res.json();
+    allProjects = data.results ? data.results.map(parseNotionPage) : [];
+    document.getElementById("notionBanner").style.display = "none";
+    document.getElementById("notionBanner").style.display = "none";
+  } catch(e) {
+    console.warn("Notion fetch failed, using sample data:", e);
+    allProjects = SAMPLE_PROJECTS;
+  }
+}
+
+function parseNotionPage(page) {
+  const p = page.properties;
+  return {
+    id: page.id,
+    name: p.Name?.title?.[0]?.plain_text || "",
+    division: p.Division?.select?.name || "",
+    status: p.Status?.select?.name || "Active",
+    location: p.Location?.rich_text?.[0]?.plain_text || "",
+    year: p.Year?.number || new Date().getFullYear(),
+    value: p.Value?.rich_text?.[0]?.plain_text || "",
+    valueLabel: p.ValueLabel?.rich_text?.[0]?.plain_text || "Value",
+    units: p.Units?.rich_text?.[0]?.plain_text || "",
+    sqft: p.SqFt?.rich_text?.[0]?.plain_text || "",
+    description: p.Description?.rich_text?.[0]?.plain_text || "",
+    highlights: (p.Highlights?.rich_text?.[0]?.plain_text || "").split(",").map(h => h.trim()).filter(Boolean),
+    image: p.Image?.url || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80"
+  };
+}
+
+// ============================================================
+//  UI
+// ============================================================
+function switchDivision(division) {
+  currentDivision = division;
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.division === division);
+  });
+  applyFilters();
+}
+
+function applyFilters() { renderProjects(); }
+
+function getFiltered() {
+  let list = [...allProjects];
+  if (currentDivision !== "all") list = list.filter(p => p.division === currentDivision);
+  const status = document.getElementById("filterStatus").value;
+  const year = document.getElementById("filterYear").value;
+  if (status) list = list.filter(p => p.status === status);
+  if (year) list = list.filter(p => String(p.year) === year);
+  return list;
+}
+
+function statusClass(s) {
+  const m = {"Active":"active","Completed":"completed","Pipeline":"pipeline","Under Contract":"under-contract"};
+  return m[s] || "active";
+}
+
+function renderProjects() {
+  const grid = document.getElementById("projectsGrid");
+  const filtered = getFiltered();
+  document.getElementById("showingCount").textContent = filtered.length;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🏗️</div><h3>No projects match your filters</h3><p>Try a different division or status filter.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="proj-card" onclick="openModal('${p.id}')">
+      <div class="card-img">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+        <div class="card-badges">
+          <span class="badge badge-division">${p.division}</span>
+          <span class="badge badge-status ${statusClass(p.status)}">${p.status}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-division-label">${p.division} · ${p.year}</div>
+        <div class="card-title">${p.name}</div>
+        <div class="card-location">📍 ${p.location}</div>
+        <div class="card-specs">
+          <div class="spec"><strong>${p.value}</strong> ${p.valueLabel}</div>
+          ${p.units ? `<div class="spec"><strong>${p.units}</strong></div>` : ""}
+        </div>
+        <div class="card-desc">${p.description.substring(0, 110)}...</div>
+        <div class="card-footer">
+          <span class="card-cta">View Details →</span>
+          <span class="card-year">${p.status}</span>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function openModal(id) {
+  const p = allProjects.find(x => String(x.id) === String(id));
+  if (!p) return;
+  document.getElementById("modalImg").src = p.image;
+  document.getElementById("modalImg").alt = p.name;
+  document.getElementById("modalTitle").textContent = p.name;
+  document.getElementById("modalLocation").textContent = "📍 " + p.location;
+  document.getElementById("modalBadges").innerHTML =
+    `<span class="badge badge-division" style="font-size:.65rem">${p.division}</span>
+     <span class="badge badge-status ${statusClass(p.status)}" style="font-size:.65rem">${p.status}</span>
+     <span class="badge" style="background:rgba(255,255,255,.08);color:var(--gray-light);font-size:.65rem;padding:.25rem .65rem">${p.year}</span>`;
+  document.getElementById("modalSpecs").innerHTML =
+    `<div class="modal-spec"><div class="modal-spec-val">${p.value}</div><div class="modal-spec-label">${p.valueLabel}</div></div>
+     <div class="modal-spec"><div class="modal-spec-val">${p.units || "—"}</div><div class="modal-spec-label">Units / Scope</div></div>
+     <div class="modal-spec"><div class="modal-spec-val">${p.sqft || "—"}</div><div class="modal-spec-label">Sq Ft</div></div>
+     <div class="modal-spec"><div class="modal-spec-val">${p.status}</div><div class="modal-spec-label">Status</div></div>`;
+  document.getElementById("modalDesc").textContent = p.description;
+  document.getElementById("modalHighlights").innerHTML = (p.highlights || []).map(h =>
+    `<div class="modal-highlight">${h}</div>`).join("");
+  document.getElementById("modalOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(e) { if (e.target === document.getElementById("modalOverlay")) closeModalDirect(); }
+function closeModalDirect() { document.getElementById("modalOverlay").classList.remove("open"); document.body.style.overflow = ""; }
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
+
+function updateCounts() {
+  document.getElementById("activeCount").textContent = allProjects.filter(p => p.status === "Active").length;
+  document.getElementById("completedCount").textContent = allProjects.filter(p => p.status === "Completed").length;
+  document.getElementById("pipelineCount").textContent = allProjects.filter(p => p.status === "Pipeline").length;
+  document.getElementById("totalCount").textContent = allProjects.length;
+  document.getElementById("sho

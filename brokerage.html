@@ -175,6 +175,8 @@ footer .logo-img{height:36px;}
     <a href="design.html">Design</a>
     <a href="development.html">Development</a>
     <a href="listings.html">Listings</a>
+    <a href="projects.html">Projects</a>
+    <a href="about.html">About</a>
     <a href="#contact" class="btn-nav">Schedule a Consultation</a>
   </nav>
 </header>
@@ -193,9 +195,9 @@ footer .logo-img{height:36px;}
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80" alt="Home for sale" />
+      <img id="heroImg" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80" alt="Home for sale" />
       <div class="hero-badge">
-        <div class="badge-num">9 Days</div>
+        <div class="badge-num" id="avgDays">9 Days</div>
         <div class="badge-label">Avg. Days to Contract</div>
       </div>
     </div>
@@ -300,52 +302,8 @@ footer .logo-img{height:36px;}
     </div>
     <a href="#contact" class="btn-outline">View All Listings</a>
   </div>
-  <div class="listings-grid">
-    <div class="listing-card ">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80" alt="Property"/>
-        <span class="listing-tag">For Sale</span>
-      </div>
-      <div class="listing-body">
-        <div class="listing-price">$329,000</div>
-        <div class="listing-address">1482 Creekside Drive, Marietta, GA</div>
-        <div class="listing-specs">
-          <div class="spec"><span class="spec-val">4</span> bd</div>
-          <div class="spec"><span class="spec-val">2.5</span> ba</div>
-          <div class="spec"><span class="spec-val">2,180</span> sqft</div>
-        </div>
-      </div>
-    </div>
-    <div class="listing-card ">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80" alt="Property"/>
-        <span class="listing-tag">For Sale</span>
-      </div>
-      <div class="listing-body">
-        <div class="listing-price">$485,000</div>
-        <div class="listing-address">3320 Peachtree Hills Ave, Athens, GA</div>
-        <div class="listing-specs">
-          <div class="spec"><span class="spec-val">5</span> bd</div>
-          <div class="spec"><span class="spec-val">3</span> ba</div>
-          <div class="spec"><span class="spec-val">3,040</span> sqft</div>
-        </div>
-      </div>
-    </div>
-    <div class="listing-card ">
-      <div class="listing-img">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="Property"/>
-        <span class="listing-tag">Under Contract</span>
-      </div>
-      <div class="listing-body">
-        <div class="listing-price">$247,500</div>
-        <div class="listing-address">807 Oak Grove Rd, Decatur, GA</div>
-        <div class="listing-specs">
-          <div class="spec"><span class="spec-val">3</span> bd</div>
-          <div class="spec"><span class="spec-val">2</span> ba</div>
-          <div class="spec"><span class="spec-val">1,620</span> sqft</div>
-        </div>
-      </div>
-    </div>
+  <div class="listings-grid" id="featuredListings">
+    <!-- Injected by JS from Notion Listings DB -->
   </div>
 </section>
 
@@ -353,32 +311,7 @@ footer .logo-img{height:36px;}
 <section class="testimonials">
   <div class="section-label ">Client Stories</div>
   <h2 class="">What Sellers &amp; Buyers Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"We were hesitant to sell but The RED Group walked us through every step. Our home sold in 9 days — $12,000 over asking. Absolutely phenomenal service."</p>
-      <div class="testi-author">
-        <div class="avatar">KT</div>
-        <div><div class="author-name">Kevin &amp; Trish M.</div><div class="author-role">Home Sellers · Marietta, GA</div></div>
-      </div>
-    </div>
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"As a first-time buyer I was nervous. My agent at The RED Group was patient, knowledgeable, and found us the perfect home under budget. Couldn't ask for more."</p>
-      <div class="testi-author">
-        <div class="avatar">AS</div>
-        <div><div class="author-name">Aisha S.</div><div class="author-role">First-Time Buyer · Decatur, GA</div></div>
-      </div>
-    </div>
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"I needed to sell fast and avoid the MLS process. The RED Group brought a cash buyer within 4 days. Closed in 3 weeks. Saved me months of stress."</p>
-      <div class="testi-author">
-        <div class="avatar">RL</div>
-        <div><div class="author-name">Raymond L.</div><div class="author-role">Motivated Seller · Athens, GA</div></div>
-      </div>
-    </div>
-  </div>
+  <div class="testi-grid" id="brokTestiGrid"><!-- Injected by JS --></div>
 </section>
 
 <!-- FAQ -->
@@ -455,7 +388,7 @@ footer .logo-img{height:36px;}
       </div>
     </div>
     <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
-    <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
     <div class="footer-col"><h4>Contact</h4><a href="#">706-363-0211</a><a href="#"><span class="__cf_email__" data-cfemail="96fff8f0f9d6e4f3f2f1e4f9e3e6f1f7b8f5f9fb">[email&#160;protected]</span></a><a href="#">Athens, Georgia</a><a href="#">Schedule a Consultation</a></div>
   </div>
   <div class="footer-bottom">
@@ -464,6 +397,173 @@ footer .logo-img{height:36px;}
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Reveal: all elements visible
-document.querySelecto
+<script>
+// ============================================================
+//  NOTION CONFIG — Brokerage Page
+//
+//  Uses 3 databases (shared with other pages):
+//
+//  [1] SITE_CONFIG DB — single-record settings
+//    Name (title)   → setting name e.g. "Avg Days to Contract"
+//    Value (text)   → e.g. "9 Days"
+//    Image (url)    → hero image URL (use Name = "Brokerage Hero Image")
+//
+//  [2] LISTINGS DB  — same DB used on listings.html
+//    Columns: Name, Status, Price, Beds, Baths, Sqft, City,
+//             PropertyType, Image, Featured (checkbox)
+//    → Only listings where Featured = true appear here (max 3)
+//
+//  [3] TESTIMONIALS DB — shared testimonials
+//    Name, Quote, Role, Stars, Active, Order, Division
+//    → Filter by Division = "Brokerage"
+//
+//  Proxy endpoints:
+//    /.netlify/functions/notion-proxy?db=brokeragepage
+//    /.netlify/functions/notion-proxy?db=listings&featured=true
+//    /.netlify/functions/notion-proxy?db=testimonials&division=Brokerage
+// ============================================================
+const BROK_CONFIG = { USE_NOTION: true };
+
+const BROK_FALLBACK_LISTINGS = [
+  { address:"1482 Creekside Drive", city:"Marietta, GA", price:"$329,000", beds:4, baths:2.5, sqft:"2,180", status:"For Sale",
+    image:"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80" },
+  { address:"3320 Peachtree Hills Ave", city:"Athens, GA", price:"$485,000", beds:5, baths:3, sqft:"3,040", status:"For Sale",
+    image:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80" },
+  { address:"807 Oak Grove Rd", city:"Decatur, GA", price:"$247,500", beds:3, baths:2, sqft:"1,620", status:"Under Contract",
+    image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" }
+];
+
+const BROK_FALLBACK_TESTI = [
+  { name:"Kevin & Trish M.", initials:"KT", role:"Home Sellers · Marietta, GA", stars:5,
+    quote:"We were hesitant to sell but The RED Group walked us through every step. Our home sold in 9 days — $12,000 over asking. Absolutely phenomenal service." },
+  { name:"Aisha S.", initials:"AS", role:"First-Time Buyer · Decatur, GA", stars:5,
+    quote:"As a first-time buyer I was nervous. My agent at The RED Group was patient, knowledgeable, and found us the perfect home under budget. Couldn't ask for more." },
+  { name:"Raymond L.", initials:"RL", role:"Motivated Seller · Athens, GA", stars:5,
+    quote:"I needed to sell fast and avoid the MLS process. The RED Group brought a cash buyer within 4 days. Closed in 3 weeks. Saved me months of stress." }
+];
+
+async function loadBrokerageData() {
+  let listings = BROK_FALLBACK_LISTINGS;
+  let testimonials = BROK_FALLBACK_TESTI;
+
+  if (BROK_CONFIG.USE_NOTION) {
+    try {
+      const [cfgRes, listRes, testiRes] = await Promise.all([
+        fetch("/.netlify/functions/notion-proxy?db=brokeragepage"),
+        fetch("/.netlify/functions/notion-proxy?db=listings&featured=true"),
+        fetch("/.netlify/functions/notion-proxy?db=testimonials&division=Brokerage")
+      ]);
+      const cfgData = await cfgRes.json();
+      const listData = await listRes.json();
+      const testiData = await testiRes.json();
+
+      // Site config
+      if (cfgData.results) {
+        cfgData.results.forEach(r => {
+          const name = r.properties.Name?.title?.[0]?.plain_text || "";
+          const val  = r.properties.Value?.rich_text?.[0]?.plain_text || "";
+          const img  = r.properties.Image?.url || "";
+          if (name === "Avg Days to Contract" && val) {
+            document.getElementById("avgDays").textContent = val;
+          }
+          if (name === "Brokerage Hero Image" && img) {
+            document.getElementById("heroImg").src = img;
+          }
+        });
+      }
+
+      // Listings
+      if (listData.results?.length) {
+        listings = listData.results.slice(0,3).map(p => ({
+          address: p.properties.Name?.title?.[0]?.plain_text || "",
+          city: p.properties.City?.rich_text?.[0]?.plain_text || "",
+          price: p.properties.Price?.rich_text?.[0]?.plain_text || "",
+          beds: p.properties.Beds?.number || 0,
+          baths: p.properties.Baths?.number || 0,
+          sqft: p.properties.Sqft?.rich_text?.[0]?.plain_text || "",
+          status: p.properties.Status?.select?.name || "For Sale",
+          image: p.properties.Image?.url || "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80"
+        }));
+      }
+
+      // Testimonials
+      if (testiData.results?.length) {
+        testimonials = testiData.results
+          .filter(p => p.properties.Active?.checkbox !== false)
+          .sort((a,b) => (a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p => ({
+            name: p.properties.Name?.title?.[0]?.plain_text || "",
+            initials: (p.properties.Name?.title?.[0]?.plain_text||"??").split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase(),
+            role: p.properties.Role?.rich_text?.[0]?.plain_text || "",
+            stars: p.properties.Stars?.number || 5,
+            quote: p.properties.Quote?.rich_text?.[0]?.plain_text || ""
+          }));
+      }
+    } catch(e) { console.warn("Notion unavailable", e); }
+  }
+
+  renderBrokListings(listings);
+  renderBrokTestimonials(testimonials);
+}
+
+function tagColor(status) {
+  const m = {"For Sale":"background:var(--red)","Under Contract":"background:rgba(50,100,160,.85)","For Rent":"background:rgba(34,120,50,.85)"};
+  return m[status] || "background:var(--red)";
+}
+
+function renderBrokListings(list) {
+  const g = document.getElementById("featuredListings");
+  if (!g) return;
+  g.innerHTML = list.map(l => `
+    <div class="listing-card">
+      <div class="listing-img">
+        <img src="${l.image}" alt="${l.address}" loading="lazy"/>
+        <span class="listing-tag" style="${tagColor(l.status)}">${l.status}</span>
+      </div>
+      <div class="listing-body">
+        <div class="listing-price">${l.price}</div>
+        <div class="listing-address">${l.address}, ${l.city}</div>
+        <div class="listing-specs">
+          <div class="spec"><span class="spec-val">${l.beds}</span> bd</div>
+          <div class="spec"><span class="spec-val">${l.baths}</span> ba</div>
+          <div class="spec"><span class="spec-val">${l.sqft}</span> sqft</div>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function renderBrokTestimonials(list) {
+  const g = document.getElementById("brokTestiGrid");
+  if (!g) return;
+  g.innerHTML = list.map(t => `
+    <div class="testi-card">
+      <div class="stars">${"★".repeat(t.stars)}</div>
+      <p class="testi-text">"${t.quote}"</p>
+      <div class="testi-author">
+        <div class="avatar">${t.initials}</div>
+        <div><div class="author-name">${t.name}</div><div class="author-role">${t.role}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+window.addEventListener("scroll", () => {
+  document.querySelector("header").style.boxShadow = window.scrollY > 20 ? "0 4px 32px rgba(0,0,0,.5)" : "none";
+});
+
+// FAQ accordion
+document.querySelectorAll(".faq-q").forEach(q => {
+  q.addEventListener("click", () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains("open");
+    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+    if (!wasOpen) item.classList.add("open");
+    const toggle = q.querySelector(".faq-toggle");
+    document.querySelectorAll(".faq-toggle").forEach(t => t.textContent = "+");
+    if (!wasOpen && toggle) toggle.textContent = "−";
+  });
+});
+
+loadBrokerageData();
+</script>
+</body>
+</html>

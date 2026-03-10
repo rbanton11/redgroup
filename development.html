@@ -172,6 +172,8 @@ footer .logo-img{height:36px;}
     <a href="design.html">Design</a>
     <a href="development.html" class="active">Development</a>
     <a href="listings.html">Listings</a>
+    <a href="projects.html">Projects</a>
+    <a href="about.html">About</a>
     <a href="#contact" class="btn-nav">Partner With Us</a>
   </nav>
 </header>
@@ -191,23 +193,11 @@ footer .logo-img{height:36px;}
         <a href="#projects" class="btn-outline">View Active Projects</a>
       </div>
     </div>
-    <div class="hero-metrics">
-      <div class="metric">
-        <div class="metric-val">$4.2M+</div>
-        <div class="metric-label">Development Pipeline</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">3</div>
-        <div class="metric-label">Active Projects · Georgia</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">14+</div>
-        <div class="metric-label">Units Under Development</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">PE</div>
-        <div class="metric-label">Engineering Oversight · Licensed</div>
-      </div>
+    <div class="hero-metrics" id="devMetrics">
+      <div class="metric"><div class="metric-val">$4.2M+</div><div class="metric-label">Development Pipeline</div></div>
+      <div class="metric"><div class="metric-val">3</div><div class="metric-label">Active Projects · Georgia</div></div>
+      <div class="metric"><div class="metric-val">14+</div><div class="metric-label">Units Under Development</div></div>
+      <div class="metric"><div class="metric-val">PE</div><div class="metric-label">Engineering Oversight · Licensed</div></div>
     </div>
   </div>
 </div>
@@ -271,88 +261,7 @@ footer .logo-img{height:36px;}
     </div>
     <a href="#contact" class="btn-outline">Discuss a Project</a>
   </div>
-  <div class="proj-grid">
-    <div class="proj-card ">
-      <div class="proj-img">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="Development project"/>
-        <span class="proj-status active">Active</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <div class="proj-meta-item">Type <span>Residential Infill</span></div>
-          <div class="proj-meta-item">Location <span>Atlanta Metro, GA</span></div>
-          <div class="proj-meta-item">Units <span>14</span></div>
-        </div>
-        <div class="proj-title">Southside Residential Development</div>
-        <p class="proj-desc">Land acquisition and 14-unit single-family build in an emerging Atlanta neighborhood. Full entitlement secured. Groundbreaking Q1 2025.</p>
-        <div class="proj-highlights">
-          <span class="highlight-tag">Infill Development</span>
-          <span class="highlight-tag">Land Acquisition</span>
-          <span class="highlight-tag">For-Sale Units</span>
-        </div>
-      </div>
-    </div>
-    <div class="proj-card ">
-      <div class="proj-img">
-        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" alt="Mixed use project"/>
-        <span class="proj-status pipeline">In Pipeline</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <div class="proj-meta-item">Type <span>Mixed-Use</span></div>
-          <div class="proj-meta-item">Location <span>Gwinnett County, GA</span></div>
-          <div class="proj-meta-item">Est. Value <span>$1.8M</span></div>
-        </div>
-        <div class="proj-title">Gwinnett Mixed-Use Assemblage</div>
-        <p class="proj-desc">Assemblage of 3 adjacent parcels for mixed-use development combining ground-floor retail with 8 residential units above. Zoning review underway.</p>
-        <div class="proj-highlights">
-          <span class="highlight-tag">Mixed-Use</span>
-          <span class="highlight-tag">Rezoning</span>
-          <span class="highlight-tag">Investor Opportunity</span>
-        </div>
-      </div>
-    </div>
-    <div class="proj-card ">
-      <div class="proj-img">
-        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80" alt="Completed project"/>
-        <span class="proj-status complete">Completed</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <div class="proj-meta-item">Type <span>Residential Renovation</span></div>
-          <div class="proj-meta-item">Location <span>Decatur, GA</span></div>
-          <div class="proj-meta-item">ROI <span>34%</span></div>
-        </div>
-        <div class="proj-title">Decatur Gut Renovation &amp; Flip</div>
-        <p class="proj-desc">Distressed acquisition, full gut renovation, and disposition at significant premium. Completed in 4 months. Sold above list price.</p>
-        <div class="proj-highlights">
-          <span class="highlight-tag">Acquisition</span>
-          <span class="highlight-tag">Full Renovation</span>
-          <span class="highlight-tag">34% ROI</span>
-        </div>
-      </div>
-    </div>
-    <div class="proj-card ">
-      <div class="proj-img">
-        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80" alt="Multi family"/>
-        <span class="proj-status active">Active</span>
-      </div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <div class="proj-meta-item">Type <span>Multi-Family</span></div>
-          <div class="proj-meta-item">Location <span>Clayton County, GA</span></div>
-          <div class="proj-meta-item">Units <span>6</span></div>
-        </div>
-        <div class="proj-title">Clayton County 6-Unit New Build</div>
-        <p class="proj-desc">Ground-up construction of a 6-unit multi-family residential building in a high-demand rental corridor. Targeting 8.2% cap rate on stabilization.</p>
-        <div class="proj-highlights">
-          <span class="highlight-tag">New Construction</span>
-          <span class="highlight-tag">Multi-Family</span>
-          <span class="highlight-tag">8.2% Target Cap</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="proj-grid" id="devProjGrid"><!-- Injected by JS --></div>
 </section>
 
 <!-- PROCESS -->
@@ -420,11 +329,11 @@ footer .logo-img{height:36px;}
 
 <!-- STATS -->
 <div class="dev-stats">
-  <div class="stats-inner">
-    <div class=""><div class="stat-n">$4.2M+</div><div class="stat-l">Pipeline Value</div></div>
-    <div class=""><div class="stat-n">3</div><div class="stat-l">Active Projects</div></div>
-    <div class=""><div class="stat-n">34%</div><div class="stat-l">Last Project ROI</div></div>
-    <div class=""><div class="stat-n">100%</div><div class="stat-l">Investor Capital Returned</div></div>
+  <div class="stats-inner" id="devStatsBar">
+    <div><div class="stat-n">$4.2M+</div><div class="stat-l">Pipeline Value</div></div>
+    <div><div class="stat-n">3</div><div class="stat-l">Active Projects</div></div>
+    <div><div class="stat-n">34%</div><div class="stat-l">Last Project ROI</div></div>
+    <div><div class="stat-n">100%</div><div class="stat-l">Investor Capital Returned</div></div>
   </div>
 </div>
 
@@ -473,18 +382,7 @@ footer .logo-img{height:36px;}
 <section class="testimonials">
   <div class="section-label ">Investor &amp; Partner Stories</div>
   <h2 class="">What Our Partners Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"I invested as a passive equity partner on the Decatur flip. Clear updates, transparent financials, and my capital was returned with a 34% return in under 5 months."</p>
-      <div class="testi-author"><div class="avatar">MF</div><div><div class="author-name">Marcus F.</div><div class="author-role">Passive Investor · Athens, GA</div></div></div>
-    </div>
-    <div class="testi-card ">
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">"As a landowner, I had no idea what my parcel was worth for development. The RED Group walked me through the numbers and structured a deal that worked for both sides. No pressure."</p>
-      <div class="testi-author"><div class="avatar">PG</div><div><div class="author-name">Phyllis G.</div><div class="author-role">Landowner · Clayton County, GA</div></div></div>
-    </div>
-  </div>
+  <div class="testi-grid" id="devTestiGrid"><!-- Injected by JS --></div>
 </section>
 
 <div class="cta-strip">
@@ -506,7 +404,7 @@ footer .logo-img{height:36px;}
       <div class="footer-socials"><a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a></div>
     </div>
     <div class="footer-col"><h4>Services</h4><a href="brokerage.html">Brokerage</a><a href="property-management.html">Property Management</a><a href="design.html">Design</a><a href="development.html">Development</a></div>
-    <div class="footer-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="projects.html">Projects</a><a href="#">Investor Opportunities</a><a href="#">Blog</a></div>
     <div class="footer-col"><h4>Contact</h4><a href="#">706-363-0211</a><a href="#"><span class="__cf_email__" data-cfemail="b2dbdcd4ddf2c0d7d6d5c0ddc7c2d5d39cd1dddf">[email&#160;protected]</span></a><a href="#">Athens, Georgia</a></div>
   </div>
   <div class="footer-bottom">
@@ -516,4 +414,208 @@ footer .logo-img{height:36px;}
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const r
+const 
+<script>
+// ============================================================
+//  NOTION CONFIG — Development Page
+//
+//  [1] DEV_METRICS — hero live numbers (or use SITE_CONFIG)
+//    Name (title) → e.g. "Development Pipeline"
+//    Value (text) → e.g. "$4.2M+"
+//    Order (number)
+//
+//  [2] PROJECTS DB — same DB as projects.html
+//    → Filtered to Division = "Development"
+//    → Filtered to Status = "Active" OR "Completed" (last 2 years)
+//    → Max 4 shown
+//    Columns: Name, Division, Status, Location, Year,
+//             Value, ValueLabel, Units, Description,
+//             Highlights (comma-separated), Image
+//
+//  [3] DEV_STATS — stats bar numbers
+//    Name (title) → label
+//    Value (text) → display value
+//    Order (number)
+//
+//  [4] TESTIMONIALS DB — filter Division = "Development"
+//    Name, Quote, Role, Stars, Active, Order, Division
+//
+//  Proxy endpoints:
+//    /.netlify/functions/notion-proxy?db=devmetrics
+//    /.netlify/functions/notion-proxy?db=projects&division=Development&limit=4
+//    /.netlify/functions/notion-proxy?db=devstats
+//    /.netlify/functions/notion-proxy?db=testimonials&division=Development
+// ============================================================
+const DEV_CONFIG = { USE_NOTION: true };
+
+const DEV_FALLBACK_METRICS = [
+  { val:"$4.2M+", label:"Development Pipeline" },
+  { val:"3",      label:"Active Projects · Georgia" },
+  { val:"14+",    label:"Units Under Development" },
+  { val:"PE",     label:"Engineering Oversight · Licensed" }
+];
+
+const DEV_FALLBACK_PROJECTS = [
+  { id:1, name:"Southside Residential Development", status:"Active", division:"Development",
+    location:"Atlanta Metro, GA", meta:[{k:"Type",v:"Residential Infill"},{k:"Location",v:"Atlanta Metro, GA"},{k:"Units",v:"14"}],
+    desc:"Land acquisition and 14-unit single-family build in an emerging Atlanta neighborhood. Full entitlement secured. Groundbreaking Q1 2025.",
+    highlights:["Infill Development","Land Acquisition","For-Sale Units"],
+    image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" },
+  { id:2, name:"Gwinnett Mixed-Use Assemblage", status:"Pipeline", division:"Development",
+    location:"Gwinnett County, GA", meta:[{k:"Type",v:"Mixed-Use"},{k:"Location",v:"Gwinnett County, GA"},{k:"Est. Value",v:"$1.8M"}],
+    desc:"Assemblage of 3 adjacent parcels for mixed-use development combining ground-floor retail with 8 residential units above. Zoning review underway.",
+    highlights:["Mixed-Use","Rezoning","Investor Opportunity"],
+    image:"https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" },
+  { id:3, name:"Decatur Gut Renovation & Flip", status:"Completed", division:"Development",
+    location:"Decatur, GA", meta:[{k:"Type",v:"Residential Renovation"},{k:"Location",v:"Decatur, GA"},{k:"ROI",v:"34%"}],
+    desc:"Distressed acquisition, full gut renovation, and disposition at significant premium. Completed in 4 months. Sold above list price.",
+    highlights:["Acquisition","Full Renovation","34% ROI"],
+    image:"https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80" },
+  { id:4, name:"Clayton County 6-Unit New Build", status:"Active", division:"Development",
+    location:"Clayton County, GA", meta:[{k:"Type",v:"Multi-Family"},{k:"Location",v:"Clayton County, GA"},{k:"Units",v:"6"}],
+    desc:"Ground-up construction of a 6-unit multi-family residential building. Targeting 8.2% cap rate on stabilization.",
+    highlights:["New Construction","Multi-Family","8.2% Target Cap"],
+    image:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80" }
+];
+
+const DEV_FALLBACK_STATS = [
+  { val:"$4.2M+", label:"Pipeline Value" },
+  { val:"3",      label:"Active Projects" },
+  { val:"34%",    label:"Last Project ROI" },
+  { val:"100%",   label:"Investor Capital Returned" }
+];
+
+const DEV_FALLBACK_TESTI = [
+  { name:"Marcus F.", initials:"MF", role:"Passive Investor · Athens, GA", stars:5,
+    quote:"I invested as a passive equity partner on the Decatur flip. Clear updates, transparent financials, and my capital was returned with a 34% return in under 5 months." },
+  { name:"Phyllis G.", initials:"PG", role:"Landowner · Clayton County, GA", stars:5,
+    quote:"As a landowner, I had no idea what my parcel was worth for development. The RED Group walked me through the numbers and structured a deal that worked for both sides. No pressure." }
+];
+
+async function loadDevData() {
+  let metrics = DEV_FALLBACK_METRICS;
+  let projects = DEV_FALLBACK_PROJECTS;
+  let stats = DEV_FALLBACK_STATS;
+  let testimonials = DEV_FALLBACK_TESTI;
+
+  if (DEV_CONFIG.USE_NOTION) {
+    try {
+      const [mRes, pRes, sRes, tRes] = await Promise.all([
+        fetch("/.netlify/functions/notion-proxy?db=devmetrics"),
+        fetch("/.netlify/functions/notion-proxy?db=projects&division=Development&limit=4"),
+        fetch("/.netlify/functions/notion-proxy?db=devstats"),
+        fetch("/.netlify/functions/notion-proxy?db=testimonials&division=Development")
+      ]);
+      const [mData, pData, sData, tData] = await Promise.all([mRes.json(),pRes.json(),sRes.json(),tRes.json()]);
+
+      if (mData.results?.length) {
+        metrics = mData.results
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({ val: p.properties.Value?.rich_text?.[0]?.plain_text||"", label: p.properties.Name?.title?.[0]?.plain_text||"" }));
+      }
+
+      if (pData.results?.length) {
+        projects = pData.results.map(p => ({
+          id: p.id,
+          name: p.properties.Name?.title?.[0]?.plain_text||"",
+          status: p.properties.Status?.select?.name||"Active",
+          location: p.properties.Location?.rich_text?.[0]?.plain_text||"",
+          meta: [
+            { k:"Type",     v: p.properties.Division?.select?.name||"" },
+            { k:"Location", v: p.properties.Location?.rich_text?.[0]?.plain_text||"" },
+            { k: p.properties.ValueLabel?.rich_text?.[0]?.plain_text||"Value",
+              v: p.properties.Value?.rich_text?.[0]?.plain_text||"" }
+          ],
+          desc: p.properties.Description?.rich_text?.[0]?.plain_text||"",
+          highlights: (p.properties.Highlights?.rich_text?.[0]?.plain_text||"").split(",").map(h=>h.trim()).filter(Boolean),
+          image: p.properties.Image?.url||"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80"
+        }));
+      }
+
+      if (sData.results?.length) {
+        stats = sData.results
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({ val: p.properties.Value?.rich_text?.[0]?.plain_text||"", label: p.properties.Name?.title?.[0]?.plain_text||"" }));
+      }
+
+      if (tData.results?.length) {
+        testimonials = tData.results
+          .filter(p=>p.properties.Active?.checkbox!==false)
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p=>({
+            name: p.properties.Name?.title?.[0]?.plain_text||"",
+            initials: (p.properties.Name?.title?.[0]?.plain_text||"??").split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase(),
+            role: p.properties.Role?.rich_text?.[0]?.plain_text||"",
+            stars: p.properties.Stars?.number||5,
+            quote: p.properties.Quote?.rich_text?.[0]?.plain_text||""
+          }));
+      }
+    } catch(e){ console.warn("Notion unavailable", e); }
+  }
+
+  renderDevMetrics(metrics);
+  renderDevProjects(projects);
+  renderDevStats(stats);
+  renderDevTestimonials(testimonials);
+}
+
+function statusClass(s) {
+  return {"Active":"active","Completed":"complete","Pipeline":"pipeline","Under Contract":"pipeline"}[s]||"active";
+}
+
+function renderDevMetrics(list) {
+  const g = document.getElementById("devMetrics");
+  if (!g||!list.length) return;
+  g.innerHTML = list.map(m=>`<div class="metric"><div class="metric-val">${m.val}</div><div class="metric-label">${m.label}</div></div>`).join("");
+}
+
+function renderDevProjects(list) {
+  const g = document.getElementById("devProjGrid");
+  if (!g) return;
+  g.innerHTML = list.map(p=>`
+    <div class="proj-card">
+      <div class="proj-img">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+        <span class="proj-status ${statusClass(p.status)}">${p.status}</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          ${p.meta.map(m=>`<div class="proj-meta-item">${m.k} <span>${m.v}</span></div>`).join("")}
+        </div>
+        <div class="proj-title">${p.name}</div>
+        <p class="proj-desc">${p.desc}</p>
+        <div class="proj-highlights">
+          ${p.highlights.map(h=>`<span class="highlight-tag">${h}</span>`).join("")}
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function renderDevStats(list) {
+  const g = document.getElementById("devStatsBar");
+  if (!g||!list.length) return;
+  g.innerHTML = list.map(s=>`<div><div class="stat-n">${s.val}</div><div class="stat-l">${s.label}</div></div>`).join("");
+}
+
+function renderDevTestimonials(list) {
+  const g = document.getElementById("devTestiGrid");
+  if (!g) return;
+  g.innerHTML = list.map(t=>`
+    <div class="testi-card">
+      <div class="stars">${"★".repeat(t.stars)}</div>
+      <p class="testi-text">"${t.quote}"</p>
+      <div class="testi-author">
+        <div class="avatar">${t.initials}</div>
+        <div><div class="author-name">${t.name}</div><div class="author-role">${t.role}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+window.addEventListener("scroll", () => {
+  document.querySelector("header").style.boxShadow = window.scrollY > 20 ? "0 4px 32px rgba(0,0,0,.5)" : "none";
+});
+
+loadDevData();
+</script>
+</body>
+</html>

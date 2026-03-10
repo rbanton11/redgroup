@@ -364,9 +364,8 @@ footer .logo-img{height:36px;}
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <a href="#" class="logo">
+  <a href="index.html" class="logo">
     <img src="images/logo.png" alt="The RED Group" class="logo-img"/>
   </a>
   <nav>
@@ -376,6 +375,8 @@ footer .logo-img{height:36px;}
     <a href="design.html">Design</a>
     <a href="development.html">Development</a>
     <a href="listings.html">Listings</a>
+    <a href="projects.html">Projects</a>
+    <a href="about.html">About</a>
     <a href="#contact" class="btn-nav">Schedule a Consultation</a>
   </nav>
 </header>
@@ -393,10 +394,10 @@ footer .logo-img{height:36px;}
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Modern property" />
+      <img id="indexHeroImg" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Modern property"/>
       <div class="hero-stat-card">
-        <div class="hero-stat-num">$12M+</div>
-        <div class="hero-stat-label">Transactions Closed</div>
+        <div class="hero-stat-num" id="indexHeroStatNum">$12M+</div>
+        <div class="hero-stat-label" id="indexHeroStatLabel">Transactions Closed</div>
       </div>
     </div>
   </div>
@@ -405,44 +406,44 @@ footer .logo-img{height:36px;}
 <!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-inner">
-    <span>Brokerage</span><span>Property Management</span><span>Interior Design</span><span>Land Development</span><span>Wholesale</span><span>Investment Partnerships</span><span>Community Redevelopment</span><span>Renovation Consulting</span>
-    <span>Brokerage</span><span>Property Management</span><span>Interior Design</span><span>Land Development</span><span>Wholesale</span><span>Investment Partnerships</span><span>Community Redevelopment</span><span>Renovation Consulting</span>
+    <span>Brokerage</span><span>Property Management</span><span>Land Development Design</span><span>Site Engineering</span><span>Wholesale</span><span>Investment Partnerships</span><span>Community Redevelopment</span><span>Renovation Consulting</span>
+    <span>Brokerage</span><span>Property Management</span><span>Land Development Design</span><span>Site Engineering</span><span>Wholesale</span><span>Investment Partnerships</span><span>Community Redevelopment</span><span>Renovation Consulting</span>
   </div>
 </div>
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="services-header ">
+  <div class="services-header">
     <div>
       <div class="section-label">What We Do</div>
       <h2>Four Divisions.<br>One Trusted Partner.</h2>
     </div>
     <a href="#contact" class="btn-outline">View All Services</a>
   </div>
-  <div class="services-grid ">
+  <div class="services-grid">
     <div class="service-card">
       <div class="service-icon">🏠</div>
       <h3>Brokerage</h3>
       <p>Buying, selling, and listing residential and commercial properties with market precision and client-first representation.</p>
-      <a href="brokerage.html" class="service-link">Learn More →</a>
+      <a href="brokerage.html" class="service-link">Learn More &rarr;</a>
     </div>
     <div class="service-card">
       <div class="service-icon">🔑</div>
       <h3>Property Management</h3>
       <p>Full-service management including tenant sourcing, rent collection, maintenance coordination, and investor reporting.</p>
-      <a href="property-management.html" class="service-link">Learn More →</a>
+      <a href="property-management.html" class="service-link">Learn More &rarr;</a>
     </div>
     <div class="service-card">
-      <div class="service-icon">✏️</div>
+      <div class="service-icon">📐</div>
       <h3>Design</h3>
-      <p>Interior and exterior design, renovation planning, and space optimization that maximizes value and buyer appeal.</p>
-      <a href="design.html" class="service-link">Learn More →</a>
+      <p>Land development design consulting — site layout, density optimization, unit mix strategy, and pro forma integration backed by licensed PE expertise.</p>
+      <a href="design.html" class="service-link">Learn More &rarr;</a>
     </div>
     <div class="service-card">
       <div class="service-icon">🏗️</div>
       <h3>Development</h3>
       <p>Land acquisition, construction management, and community redevelopment projects across Georgia.</p>
-      <a href="development.html" class="service-link">Learn More →</a>
+      <a href="development.html" class="service-link">Learn More &rarr;</a>
     </div>
   </div>
 </section>
@@ -450,145 +451,124 @@ footer .logo-img{height:36px;}
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="how-grid">
-    <div class="how-visual ">
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80" alt="Property process" />
+    <div class="how-visual">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80" alt="Property process"/>
       <div class="how-visual-overlay"></div>
       <div class="how-badge">Our Process</div>
     </div>
     <div>
-      <div class="section-label ">How It Works</div>
-      <h2 class="">From First Call<br>to Final Close.</h2>
-      <div class="steps" style="margin-top:2.5rem;">
-        <div class="step ">
+      <div class="section-label">How It Works</div>
+      <h2>From First Call<br>to Final Close.</h2>
+      <div class="steps" style="margin-top:2.5rem">
+        <div class="step">
           <div class="step-num">01</div>
           <div class="step-content">
             <h4>Initial Consultation</h4>
             <p>We assess your goals, property, and timeline — whether you're selling, investing, or need management services.</p>
           </div>
         </div>
-        <div class="step ">
+        <div class="step">
           <div class="step-num">02</div>
           <div class="step-content">
             <h4>Custom Strategy</h4>
             <p>Our team builds a tailored plan — pricing, marketing, renovation scope, or investment structuring — aligned to your outcome.</p>
           </div>
         </div>
-        <div class="step ">
+        <div class="step">
           <div class="step-num">03</div>
           <div class="step-content">
-            <h4>Execution & Close</h4>
+            <h4>Execution &amp; Close</h4>
             <p>We handle every detail from listing to closing table, keeping you informed and in control throughout.</p>
           </div>
         </div>
       </div>
-      <a href="#contact" class="btn-primary" style="margin-top:2.5rem; display:inline-block;">Get Started Today</a>
+      <a href="#contact" class="btn-primary" style="margin-top:2.5rem;display:inline-block">Get Started Today</a>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- STATS — Notion-powered -->
 <div class="stats">
-  <div class="stats-inner">
-    <div class="stat-item ">
-      <div class="stat-n">150+</div>
-      <div class="stat-l">Properties Served</div>
-    </div>
-    <div class="stat-item ">
-      <div class="stat-n">$12M+</div>
-      <div class="stat-l">In Transactions</div>
-    </div>
-    <div class="stat-item ">
-      <div class="stat-n">4</div>
-      <div class="stat-l">Service Divisions</div>
-    </div>
-    <div class="stat-item ">
-      <div class="stat-n">Georgia</div>
-      <div class="stat-l">Licensed & Operating</div>
-    </div>
+  <div class="stats-inner" id="statsGrid">
+    <div class="stat-item"><div class="stat-n">150+</div><div class="stat-l">Properties Served</div></div>
+    <div class="stat-item"><div class="stat-n">$12M+</div><div class="stat-l">In Transactions</div></div>
+    <div class="stat-item"><div class="stat-n">4</div><div class="stat-l">Service Divisions</div></div>
+    <div class="stat-item"><div class="stat-n">Georgia</div><div class="stat-l">Licensed &amp; Operating</div></div>
   </div>
 </div>
 
-<!-- PROJECTS -->
+<!-- FEATURED PROJECTS -->
 <section class="projects" id="projects">
-  <div class="projects-header ">
+  <div class="projects-header">
     <div>
       <div class="section-label">Portfolio</div>
       <h2>Featured Projects</h2>
     </div>
-    <a href="#contact" class="btn-outline">View All Projects</a>
+    <a href="projects.html" class="btn-outline">View All Projects</a>
   </div>
-  <div class="projects-grid ">
+  <div class="projects-grid">
     <div class="proj-card">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="Development project" />
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80" alt="Development project"/>
       <div class="proj-overlay">
         <div class="proj-tag">Development</div>
-        <div class="proj-title">Atlanta Metro Residential Redevelopment</div>
-        <div class="proj-sub">Land acquisition · 14-unit build · 2024</div>
+        <div class="proj-title">Athens Metro Residential Redevelopment</div>
+        <div class="proj-sub">Land acquisition &middot; 6-unit build &middot; 2025</div>
       </div>
     </div>
     <div class="proj-card">
-      <img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt="Interior design" />
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="Site engineering"/>
       <div class="proj-overlay">
         <div class="proj-tag">Design</div>
-        <div class="proj-title">Modern Kitchen Renovation</div>
-        <div class="proj-sub">Interior · Full scope · 2024</div>
+        <div class="proj-title">Infill Site Design Consultation</div>
+        <div class="proj-sub">PE site layout &middot; +$220K value added &middot; 2024</div>
       </div>
     </div>
     <div class="proj-card">
-      <img src="https://images.unsplash.com/photo-1582407947304-fd86f28f2b3e?w=600&q=80" alt="Brokerage listing" />
+      <img src="https://images.unsplash.com/photo-1582407947304-fd86f28f2b3e?w=600&q=80" alt="Brokerage listing"/>
       <div class="proj-overlay">
         <div class="proj-tag">Brokerage</div>
-        <div class="proj-title">Suburban 4BR Sold in 9 Days</div>
-        <div class="proj-sub">List price · $347,000 · Full ask</div>
+        <div class="proj-title">Decatur Single-Family — Sold in 9 Days</div>
+        <div class="proj-sub">34% ROI &middot; Above ask &middot; 2024</div>
       </div>
     </div>
     <div class="proj-card">
-      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" alt="Property management" />
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" alt="Property management"/>
       <div class="proj-overlay">
         <div class="proj-tag">Property Management</div>
-        <div class="proj-title">Multi-Family Portfolio Management</div>
-        <div class="proj-sub">8 units · 98% occupancy · Ongoing</div>
+        <div class="proj-title">Athens Rental Portfolio</div>
+        <div class="proj-sub">8 units &middot; 98% occupancy &middot; Ongoing</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- TESTIMONIALS — Notion-powered -->
 <section class="testimonials" id="testimonials">
-  <div class="section-label ">Client Stories</div>
-  <h2 class="">What Our Clients Say</h2>
-  <div class="testi-grid">
-    <div class="testi-card ">
-      <div class="testi-stars">★★★★★</div>
+  <div class="section-label">Client Stories</div>
+  <h2>What Our Clients Say</h2>
+  <div class="testi-grid" id="testiGrid">
+    <div class="testi-card">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="testi-text">"The RED Group made selling my property stress-free. From the first call to the closing table, they kept me informed and got me above asking price."</p>
       <div class="testi-author">
         <div class="testi-avatar">DW</div>
-        <div>
-          <div class="testi-name">Denise W.</div>
-          <div class="testi-role">Home Seller · Athens, GA</div>
-        </div>
+        <div><div class="testi-name">Denise W.</div><div class="testi-role">Home Seller &middot; Athens, GA</div></div>
       </div>
     </div>
-    <div class="testi-card ">
-      <div class="testi-stars">★★★★★</div>
+    <div class="testi-card">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="testi-text">"As an investor, I needed a team that understood numbers AND execution. The RED Group's development division delivered exactly what they promised."</p>
       <div class="testi-author">
         <div class="testi-avatar">MJ</div>
-        <div>
-          <div class="testi-name">Marcus J.</div>
-          <div class="testi-role">Real Estate Investor</div>
-        </div>
+        <div><div class="testi-name">Marcus J.</div><div class="testi-role">Real Estate Investor</div></div>
       </div>
     </div>
-    <div class="testi-card ">
-      <div class="testi-stars">★★★★★</div>
+    <div class="testi-card">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="testi-text">"The property management service is exceptional. My units are fully occupied, maintenance is handled fast, and the monthly reports are crystal clear."</p>
       <div class="testi-author">
         <div class="testi-avatar">TL</div>
-        <div>
-          <div class="testi-name">Tanya L.</div>
-          <div class="testi-role">Property Owner · Decatur, GA</div>
-        </div>
+        <div><div class="testi-name">Tanya L.</div><div class="testi-role">Property Owner &middot; Athens, GA</div></div>
       </div>
     </div>
   </div>
@@ -598,98 +578,210 @@ footer .logo-img{height:36px;}
 <div class="cta-banner" id="contact">
   <div class="cta-banner-left">
     <div class="section-label">Take the Next Step</div>
-    <h2>Ready to Work<br>With Us?</h2>
-    <p>Whether you're selling a home, looking for property management, or ready to develop, The RED Group is your full-service partner from day one. Let's connect.</p>
-    <div style="display:flex; flex-direction:column; gap:.8rem; max-width:420px;">
-      <input type="text" placeholder="Your Name" style="padding:.9rem 1.1rem; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.15); color:var(--white); font-family:var(--sans); font-size:.9rem; outline:none;"/>
-      <input type="email" placeholder="Email Address" style="padding:.9rem 1.1rem; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.15); color:var(--white); font-family:var(--sans); font-size:.9rem; outline:none;"/>
-      <select style="padding:.9rem 1.1rem; background:#1a1a1a; border:1px solid rgba(255,255,255,.15); color:var(--gray-light); font-family:var(--sans); font-size:.9rem; outline:none;">
-        <option value="">Service I'm interested in...</option>
-        <option>Brokerage – Buy/Sell/List</option>
-        <option>Property Management</option>
-        <option>Design &amp; Renovation</option>
-        <option>Development / Investment</option>
-        <option>Wholesale Opportunity</option>
-      </select>
-      <button style="padding:.9rem; background:var(--red); color:var(--white); border:none; font-family:var(--sans); font-size:.82rem; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; font-weight:500; transition:background .2s;" onmouseover="this.style.background='#a80000'" onmouseout="this.style.background='#8B0000'">Submit &amp; Get Started</button>
-    </div>
-  </div>
-  <div class="cta-banner-right">
-    <div style="position:relative;z-index:1;">
-      <div style="font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:1rem;">Or reach us directly</div>
-      <div style="display:flex;flex-direction:column;gap:1.2rem;">
-        <div>
-          <div style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.3rem;">Phone</div>
-          <a href="tel:+14045550000" style="color:var(--white);text-decoration:none;font-family:var(--serif);font-size:1.4rem;font-weight:700;">706-363-0211</a>
-        </div>
-        <div>
-          <div style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.3rem;">Email</div>
-          <a href="/cdn-cgi/l/email-protection#f49d9a929bb4809c9186919093869b8184da979b99" style="color:var(--white);text-decoration:none;font-family:var(--serif);font-size:1.1rem;font-weight:700;"><span class="__cf_email__" data-cfemail="e28b8c848da2968a8790878685908d9792cc818d8f">[email&#160;protected]</span></a>
-        </div>
-        <div>
-          <div style="font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.3rem;">Office</div>
-          <span style="color:var(--white);font-size:.95rem;">Athens, Georgia</span>
-        </div>
+    <h2>Ready to Move Forward?</h2>
+    <p>Whether you're selling, investing, building, or need management — The RED Group is your full-service partner across Georgia.</p>
+    <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.6rem">
+      <div style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:rgba(255,255,255,.75)">
+        <span style="color:var(--red);font-size:1rem">&#9742;</span> 706-363-0211
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:rgba(255,255,255,.75)">
+        <span style="color:var(--red);font-size:1rem">&#9993;</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7d14131b123d0f18191a0f12080d1a1c531e1210">[email&#160;protected]</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:rgba(255,255,255,.75)">
+        <span style="color:var(--red);font-size:1rem">&#9679;</span> Athens, Georgia
       </div>
     </div>
   </div>
+  <div class="cta-banner-right">
+    <form onsubmit="return false">
+      <input class="form-field" type="text" placeholder="Your Name"/>
+      <input class="form-field" type="tel" placeholder="Phone Number"/>
+      <input class="form-field" type="email" placeholder="Email Address"/>
+      <select class="form-field" style="color:#888">
+        <option value="">I need help with...</option>
+        <option>Selling a Property</option>
+        <option>Buying a Property</option>
+        <option>Property Management</option>
+        <option>Development Design</option>
+        <option>Land Development</option>
+        <option>Wholesale / Off-Market Deal</option>
+        <option>Investment Consultation</option>
+      </select>
+      <textarea class="form-field" rows="3" placeholder="Tell us about your property or project" style="resize:vertical"></textarea>
+      <button type="submit" style="width:100%;padding:.9rem;background:var(--red);color:var(--white);border:none;font-family:var(--sans);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-weight:500">
+        Submit &rarr;
+      </button>
+    </form>
+  </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#" class="logo" style="margin-bottom:.8rem; display:inline-flex;">
-        <div class="logo-mark">R</div>
-        <span class="logo-text">The RED Group</span>
+      <a href="index.html" class="logo" style="margin-bottom:.8rem;display:inline-flex">
+        <img src="images/logo.png" alt="The RED Group" class="logo-img" style="height:36px"/>
       </a>
-      <p>Georgia's full-service real estate firm. Brokerage, property management, design, and development — all under one roof.</p>
+      <p>Georgia's full-service real estate firm. Brokerage, property management, design, and development.</p>
       <div class="footer-socials">
-        <a href="#" class="social-link">in</a>
-        <a href="#" class="social-link">fb</a>
-        <a href="#" class="social-link">ig</a>
-        <a href="#" class="social-link">yt</a>
+        <a href="#" class="social-link">in</a><a href="#" class="social-link">fb</a><a href="#" class="social-link">ig</a>
       </div>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
-      <a href="#">Brokerage</a>
-      <a href="#">Property Management</a>
-      <a href="#">Design</a>
-      <a href="#">Development</a>
+      <a href="brokerage.html">Brokerage</a>
+      <a href="property-management.html">Property Management</a>
+      <a href="design.html">Design</a>
+      <a href="development.html">Development</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
-      <a href="#">About Us</a>
-      <a href="#">Projects</a>
-      <a href="#">Investor Opportunities</a>
-      <a href="#">Blog / Insights</a>
+      <a href="about.html">About Us</a>
+      <a href="projects.html">Projects</a>
+      <a href="listings.html">Listings</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
-      <a href="#">Schedule Consultation</a>
-      <a href="#">Submit Property</a>
-      <a href="#">Careers</a>
-      <a href="#">Privacy Policy</a>
+      <a href="tel:7063630211">706-363-0211</a>
+      <a href="/cdn-cgi/l/email-protection#d6bfb8b0b996a4b3b2b1a4b9a3a6b1b7f8b5b9bb"><span class="__cf_email__" data-cfemail="7f161119103f0d1a1b180d100a0f181e511c1012">[email&#160;protected]</span></a>
+      <a href="#">Athens, Georgia</a>
+      <a href="#contact">Schedule a Consultation</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker. &nbsp;|&nbsp; GA Brokerage License #82466</p>
-    <p style="color:var(--gray-light);font-size:.75rem;">Georgia Real Estate License #000000</p>
+    <p>&copy; 2025 The RED Group. All rights reserved. Licensed Georgia Real Estate Broker. &nbsp;|&nbsp; GA Brokerage License #82466</p>
   </div>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll const reveals = document.querySelectorAll('.');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        const delay = e.target.closest('.services-grid, .testi-grid, .stats-inner')
-          ? Array.from(e.target.parentElement.children).indexOf(e.target) * 80
-          : 0;
-        setTimeout(() => e.target.classList.add('visible'), delay);
-        observer.unobserve(e.target);
+// ============================================================
+//  NOTION CONFIG — Homepage dynamic sections
+//
+//  Notion Database 1: TESTIMONIALS
+//    Name (title)      → client name
+//    Quote (text)      → testimonial text
+//    Role (text)       → "Home Seller · Athens, GA"
+//    Stars (number)    → 1–5
+//    Active (checkbox) → only displays if checked
+//    Order (number)    → display order
+//
+//  Notion Database 2: STATS
+//    Name (title)      → label e.g. "Properties Served"
+//    Value (text)      → e.g. "150+"
+//    Order (number)    → 1–4
+//
+//  Proxy endpoints:
+//    /.netlify/functions/notion-proxy?db=indexhero    → hero image + stat card
+//    /.netlify/functions/notion-proxy?db=testimonials → homepage testimonials
+//    /.netlify/functions/notion-proxy?db=indexstats   → homepage stats bar
+//
+//  INDEX HERO DB — "Homepage Config"
+//    Name (title) → "Hero Image" | "Hero Stat Number" | "Hero Stat Label"
+//    Value (text) → display value e.g. "$14M+" or "Transactions Closed"
+//    Image (url)  → used when Name = "Hero Image"
+//
+//  See notion-proxy.js for full DB setup guide.
+// ============================================================
+const HOMEPAGE_CONFIG = {
+  USE_NOTION: true,
+  TESTIMONIALS_DB: "",
+  STATS_DB: ""
+};
+
+const FALLBACK_TESTIMONIALS = [
+  { name:"Denise W.", initials:"DW", role:"Home Seller · Athens, GA", stars:5,
+    quote:"The RED Group made selling my property stress-free. From the first call to the closing table, they kept me informed and got me above asking price." },
+  { name:"Marcus J.", initials:"MJ", role:"Real Estate Investor", stars:5,
+    quote:"As an investor, I needed a team that understood numbers AND execution. The RED Group's development division delivered exactly what they promised." },
+  { name:"Tanya L.", initials:"TL", role:"Property Owner · Athens, GA", stars:5,
+    quote:"The property management service is exceptional. My units are fully occupied, maintenance is handled fast, and the monthly reports are crystal clear." }
+];
+
+const FALLBACK_STATS = [
+  { value:"150+", label:"Properties Served" },
+  { value:"$12M+", label:"In Transactions" },
+  { value:"4", label:"Service Divisions" },
+  { value:"Georgia", label:"Licensed & Operating" }
+];
+
+async function loadDynamicSections() {
+  let testimonials = FALLBACK_TESTIMONIALS;
+  let stats = FALLBACK_STATS;
+
+  if (HOMEPAGE_CONFIG.USE_NOTION) {
+    try {
+      const [hRes, tRes, sRes] = await Promise.all([
+        fetch("/.netlify/functions/notion-proxy?db=indexhero"),
+        fetch("/.netlify/functions/notion-proxy?db=testimonials"),
+        fetch("/.netlify/functions/notion-proxy?db=indexstats")
+      ]);
+      const hData = await hRes.json();
+      const tData = await tRes.json();
+      const sData = await sRes.json();
+
+      // Hero image + stat
+      if (hData.results) {
+        hData.results.forEach(r => {
+          const name = r.properties.Name?.title?.[0]?.plain_text || "";
+          const val  = r.properties.Value?.rich_text?.[0]?.plain_text || "";
+          const img  = r.properties.Image?.url || "";
+          if (name === "Hero Image" && img) {
+            const el = document.getElementById("indexHeroImg");
+            if (el) el.src = img;
+          }
+          if (name === "Hero Stat Number" && val) {
+            const el = document.getElementById("indexHeroStatNum");
+            if (el) el.textContent = val;
+          }
+          if (name === "Hero Stat Label" && val) {
+            const el = document.getElementById("indexHeroStatLabel");
+            if (el) el.textContent = val;
+          }
+        });
       }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => o
+
+      if (tData.results && tData.results.length) {
+        testimonials = tData.results
+          .filter(p => p.properties.Active?.checkbox !== false)
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p => ({
+            name: p.properties.Name?.title?.[0]?.plain_text || "",
+            initials: (p.properties.Name?.title?.[0]?.plain_text||"??").split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase(),
+            role: p.properties.Role?.rich_text?.[0]?.plain_text || "",
+            stars: p.properties.Stars?.number || 5,
+            quote: p.properties.Quote?.rich_text?.[0]?.plain_text || ""
+          }));
+      }
+
+      if (sData.results && sData.results.length) {
+        stats = sData.results
+          .sort((a,b)=>(a.properties.Order?.number||99)-(b.properties.Order?.number||99))
+          .map(p => ({
+            value: p.properties.Value?.rich_text?.[0]?.plain_text || "",
+            label: p.properties.Name?.title?.[0]?.plain_text || ""
+          }));
+      }
+    } catch(e) { console.warn("Notion unavailable, using defaults"); }
+  }
+
+  renderTestimonials(testimonials);
+  renderStats(stats);
+}
+
+function renderTestimonials(list) {
+  const grid = document.getElementById("testiGrid");
+  if (!grid || !list.length) return;
+  grid.innerHTML = list.map(t => `
+    <div class="testi-card">
+      <div class="testi-stars">${"&#9733;".repeat(t.stars)}</div>
+      <p class="testi-text">"${t.quote}"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">${t.initials}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
+      </div>
+    </div>`).join("");
+}
+
+function renderStats(list) {
+  const grid = document.getElementById("statsGrid");
+  if (!grid || !list.length) return;
+  grid.innerHTML =

@@ -1,0 +1,27 @@
+# ============================================================
+#  THE RED GROUP — Netlify Configuration
+#  Place this file at the ROOT of your GitHub repo
+# ============================================================
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Redirect /api/* to the function for cleaner URLs (optional)
+[[redirects]]
+  from = "/api/notion/*"
+  to   = "/.netlify/functions/notion-proxy"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
