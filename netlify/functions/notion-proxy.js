@@ -101,16 +101,16 @@ const https = require("https");
 
 // ── PASTE YOUR DATABASE IDs HERE ─────────────────────────────────────────────
 const DATABASE_IDS = {
-  indexhero:     "PASTE_HOMEPAGE_HERO_DB_ID",
-  indexstats:    "PASTE_HOMEPAGE_STATS_DB_ID",
-  brokeragepage: "PASTE_BROKERAGE_PAGE_CONFIG_DB_ID",
-  listings:      "PASTE_LISTINGS_DB_ID",
-  projects:      "PASTE_PROJECTS_DB_ID",
-  testimonials:  "PASTE_TESTIMONIALS_DB_ID",
-  team:          "PASTE_TEAM_DB_ID",
-  pmstats:       "PASTE_PM_STATS_DB_ID",
-  devmetrics:    "PASTE_DEV_METRICS_DB_ID",
-  devstats:      "PASTE_DEV_STATS_DB_ID",
+  indexhero:    "f013290775aa83d284e9810acc307b64",
+  indexstats:   "31f3290775aa808c9607f665dfa6cd5f",
+  brokeragepage:"31f3290775aa80ab9154cbe37f1c3df0",
+  listings:     "31f3290775aa8074b28bd5a6749ecb48",
+  projects:     "31f3290775aa8099bf08e57f1169a3dd",
+  testimonials: "31f3290775aa8033ae44f7575f428859",
+  team:         "31f3290775aa80aab084fde2fa2e677c,
+  pmstats:      "31f3290775aa80e1be4fd15fba33d531",
+  devmetrics:   "2713290775aa8308bf4c011f83125e99",
+  devstats:     "2233290775aa825daabb0145ca8b5900",
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
