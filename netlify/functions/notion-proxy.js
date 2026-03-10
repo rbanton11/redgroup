@@ -109,14 +109,14 @@ const DATABASE_IDS = {
   indexhero:    "PASTE_HOMEPAGE_HERO_DB_ID",
   indexstats:   "PASTE_HOMEPAGE_STATS_DB_ID",
   brokeragepage:"PASTE_BROKERAGE_PAGE_CONFIG_DB_ID",
-  listings:     "PASTE_LISTINGS_DB_ID",
+  listings:     "31f3290775aa8074b28bd5a6749ecb48",
   projects:     "PASTE_PROJECTS_DB_ID",
   testimonials: "PASTE_TESTIMONIALS_DB_ID",
   team:         "PASTE_TEAM_DB_ID",
   pmstats:      "PASTE_PM_STATS_DB_ID",
   devmetrics:   "PASTE_DEV_METRICS_DB_ID",
   devstats:     "PASTE_DEV_STATS_DB_ID",
-  stats:        "PASTE_HOMEPAGE_STATS_DB_ID",   // alias
+  stats:        "31f3290775aa808c9607f665dfa6cd5f",   // alias
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
