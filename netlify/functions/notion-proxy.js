@@ -1,269 +1,256 @@
 // ============================================================
 //  THE RED GROUP — Notion Proxy Function
-//  File: netlify/functions/notion-proxy.js
+//  netlify/functions/notion-proxy.js
 //
-//  This single function handles ALL Notion database queries
-//  across every page of the site. It keeps your API key
-//  secret (never exposed in browser) and returns clean JSON.
+//  Uses Node built-in `https` — zero npm dependencies,
+//  works on Netlify Node 14 / 16 / 18 / 20.
 //
-//  SETUP — 3 steps:
+//  SETUP
+//  ─────
+//  1. Netlify → Site Settings → Environment Variables
+//       NOTION_TOKEN = secret_xxxxxxxxxxxxxxxxxxxxxxxx
+//
+//  2. Paste your 32-char database IDs in DATABASE_IDS below.
+//
+//  3. In Notion, open each database → ••• → Add connections
+//     → "RED Group Website" (your integration name).
+//     The DB will 404 if this step is skipped.
+//
+//  DATABASE COLUMN REFERENCE
 //  ─────────────────────────────────────────────────────────
-//  1. Go to https://www.notion.so/my-integrations
-//     Create an integration called "RED Group Website"
-//     Copy the "Internal Integration Token" (starts with secret_)
 //
-//  2. In Netlify → Site Settings → Environment Variables, add:
-//       Key:   NOTION_TOKEN
-//       Value: secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//  indexhero  "Homepage Config"
+//    Name (title)  → "Hero Image" | "Hero Stat Number" | "Hero Stat Label"
+//    Value (text)  → e.g. "$14M+"
+//    Image (url)   → only used for "Hero Image" row
 //
-//  3. For each database below, open it in Notion, click "..."
-//     → "Add connections" → select your "RED Group Website"
-//     integration. Then copy the database ID from the URL:
-//     notion.so/{workspace}/{DATABASE_ID}?v=...
-//     Paste each ID into the DATABASE_IDS object below.
+//  indexstats  "Homepage Stats"
+//    Name (title)   → "Properties Served" etc.
+//    Value (text)   → "150+"
+//    Order (number) → 1 2 3 4
 //
-//  DATABASE SETUP GUIDE
-//  ─────────────────────────────────────────────────────────
-//  Create each database in Notion with exactly these columns:
+//  brokeragepage  "Brokerage Page Config"
+//    Name (title)  → "Avg Days to Contract" | "Hero Image"
+//    Value (text)  → "9 Days"
+//    Image (url)   → hero image URL
 //
-//  ── HOMEPAGE HERO ("Homepage Config") ────────────────────
-//  Name (title)   → "Hero Image" | "Hero Stat Number" | "Hero Stat Label"
-//  Value (text)   → e.g. "$14M+" or "Transactions Closed"
-//  Image (url)    → paste image URL when Name = "Hero Image"
+//  listings  "Listings"
+//    Name (title)          → property address
+//    Status (select)       → "For Sale" | "For Rent" | "Under Contract" | "Sold"
+//    Price (text)          → "$329,000"
+//    Beds (number)         → 3
+//    Baths (number)        → 2.5
+//    Sqft (text)           → "1,840"
+//    City (text)           → "Athens, GA"
+//    PropertyType (select) → "Single-Family" | "Multi-Family" | "Condo" | "Land" | "Commercial"
+//    Description (text)    → property description
+//    Features (text)       → comma-separated features
+//    Image (url)           → direct image URL
+//    Featured (checkbox)   → check to show on brokerage page
 //
-//  ── INDEX STATS ("Homepage Stats") ───────────────────────
-//  Name (title)   → stat label e.g. "Properties Served"
-//  Value (text)   → e.g. "150+"
-//  Order (number) → 1, 2, 3, 4
+//  projects  "Projects"
+//    Name (title)       → project name
+//    Division (select)  → "Brokerage"|"Development"|"Design"|"Management"
+//    Status (select)    → "Active"|"Completed"|"Pipeline"|"Under Contract"
+//    Location (text)    → "Athens, GA"
+//    Year (number)      → 2025
+//    Value (text)       → "$1.8M"
+//    ValueLabel (text)  → "Project Value"
+//    Units (text)       → "6 Units"
+//    SqFt (text)        → "5,400 sqft"
+//    Description (text) → project description
+//    Highlights (text)  → comma-separated bullet points
+//    Image (url)        → direct image URL
 //
-//  ── BROKERAGE PAGE ("Brokerage Page Config") ─────────────
-//  Name (title)   → "Avg Days to Contract" | "Hero Image"
-//  Value (text)   → e.g. "9 Days"
-//  Image (url)    → used when Name = "Hero Image"
+//  testimonials  "Testimonials"
+//    Name (title)      → client name
+//    Quote (text)      → testimonial text
+//    Role (text)       → "Home Seller · Athens, GA"
+//    Stars (number)    → 5
+//    Division (select) → "Brokerage"|"Management"|"Design"|"Development"|"About"
+//    Active (checkbox) → uncheck to hide
+//    Order (number)    → display order within division
 //
-//  ── LISTINGS ("Listings") ────────────────────────────────
-//  Name (title)       → property address
-//  Status (select)    → "For Sale" | "For Rent" | "Under Contract" | "Sold"
-//  Price (text)       → "$329,000"
-//  Beds (number)      → 3
-//  Baths (number)     → 2
-//  Sqft (text)        → "1,840"
-//  City (text)        → "Athens, GA"
-//  PropertyType (select) → "Single-Family" | "Multi-Family" | "Condo" | "Land" | "Commercial"
-//  Description (text) → property description
-//  Features (text)    → comma-separated e.g. "Hardwood floors, Updated kitchen"
-//  Image (url)        → direct image URL
-//  Featured (checkbox)→ check to show on Brokerage page
-//  ListDate (text)    → "Jan 2025"
+//  team  "Team"
+//    Name (title)       → full name
+//    Title (text)       → job title
+//    Bio (text)         → 2-3 sentence bio
+//    Credentials (text) → comma-separated e.g. "GA Broker #82466, PE License"
+//    Photo (url)        → headshot image URL
+//    Active (checkbox)  → show/hide
+//    Order (number)     → display order
 //
-//  ── PROJECTS ("Projects") ────────────────────────────────
-//  Name (title)        → project name
-//  Division (select)   → "Brokerage" | "Development" | "Design" | "Management"
-//  Status (select)     → "Active" | "Completed" | "Pipeline" | "Under Contract"
-//  Location (text)     → "Athens, GA"
-//  Year (number)       → 2025
-//  Value (text)        → "$1.8M" or "34% ROI"
-//  ValueLabel (text)   → "Project Value" or "Return on Investment"
-//  Units (text)        → "6 Units" or "4.2 Acres"
-//  SqFt (text)         → "5,400 sqft"
-//  Description (text)  → project description
-//  Highlights (text)   → comma-separated bullet points
-//  Image (url)         → direct image URL
+//  pmstats  "Property Management Stats"
+//    Name (title)   → "Avg. Occupancy Rate" etc.
+//    Value (text)   → "98%"
+//    Order (number) → 1 2 3 4
 //
-//  ── TESTIMONIALS ("Testimonials") ────────────────────────
-//  Name (title)       → client name
-//  Quote (text)       → testimonial text
-//  Role (text)        → "Home Seller · Athens, GA"
-//  Stars (number)     → 5
-//  Division (select)  → "Brokerage" | "Management" | "Design" | "Development" | "About"
-//  Active (checkbox)  → uncheck to hide without deleting
-//  Order (number)     → display order within each division
+//  devmetrics  "Development Metrics"
+//    Name (title)   → "Development Pipeline" etc.
+//    Value (text)   → "$4.2M+"
+//    Order (number) → 1 2 3 4
 //
-//  ── TEAM ("Team") ────────────────────────────────────────
-//  Name (title)       → full name
-//  Title (text)       → "Principal Broker & Licensed PE"
-//  Bio (text)         → 2-3 sentence bio
-//  Credentials (text) → comma-separated e.g. "GA Broker #82466, PE License"
-//  Photo (url)        → direct URL to headshot image
-//  Active (checkbox)  → show/hide
-//  Order (number)     → display order
-//
-//  ── PM STATS ("Property Management Stats") ───────────────
-//  Name (title)   → stat label e.g. "Avg. Occupancy Rate"
-//  Value (text)   → e.g. "98%"
-//  Order (number) → 1, 2, 3, 4
-//
-//  ── DEV METRICS ("Development Metrics") ─────────────────
-//  Name (title)   → e.g. "Development Pipeline"
-//  Value (text)   → e.g. "$4.2M+"
-//  Order (number) → 1, 2, 3, 4
-//
-//  ── DEV STATS ("Development Stats") ─────────────────────
-//  Name (title)   → e.g. "Pipeline Value"
-//  Value (text)   → e.g. "$4.2M+"
-//  Order (number) → 1, 2, 3, 4
+//  devstats  "Development Stats"
+//    Name (title)   → "Pipeline Value" etc.
+//    Value (text)   → "$4.2M+"
+//    Order (number) → 1 2 3 4
 // ============================================================
+
+"use strict";
+const https = require("https");
 
 // ── PASTE YOUR DATABASE IDs HERE ─────────────────────────────────────────────
 const DATABASE_IDS = {
-  indexhero:    "f013290775aa83d284e9810acc307b64",
-  indexstats:   "31f3290775aa808c9607f665dfa6cd5f",
-  brokeragepage:"31f3290775aa80ab9154cbe37f1c3df0",
-  listings:     "31f3290775aa8074b28bd5a6749ecb48",
-  projects:     "31f3290775aa8099bf08e57f1169a3dd",
-  testimonials: "31f3290775aa8033ae44f7575f428859",
-  team:         "31f3290775aa80aab084fde2fa2e677c,
-  pmstats:      "31f3290775aa80e1be4fd15fba33d531",
-  devmetrics:   "2713290775aa8308bf4c011f83125e99",
-  devstats:     "2233290775aa825daabb0145ca8b5900",
-  stats:        "31f3290775aa808c9607f665dfa6cd5f",   // alias
+  indexhero:     "PASTE_HOMEPAGE_HERO_DB_ID",
+  indexstats:    "PASTE_HOMEPAGE_STATS_DB_ID",
+  brokeragepage: "PASTE_BROKERAGE_PAGE_CONFIG_DB_ID",
+  listings:      "PASTE_LISTINGS_DB_ID",
+  projects:      "PASTE_PROJECTS_DB_ID",
+  testimonials:  "PASTE_TESTIMONIALS_DB_ID",
+  team:          "PASTE_TEAM_DB_ID",
+  pmstats:       "PASTE_PM_STATS_DB_ID",
+  devmetrics:    "PASTE_DEV_METRICS_DB_ID",
+  devstats:      "PASTE_DEV_STATS_DB_ID",
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NOTION_VERSION = "2022-06-28";
-const NOTION_BASE    = "https://api.notion.com/v1";
 
-// Build Notion filter based on query params
-function buildFilter(db, params) {
-  const filters = [];
-
-  // Division filter (testimonials, projects)
-  if (params.division) {
-    filters.push({
-      property: "Division",
-      select: { equals: params.division }
-    });
-  }
-
-  // Featured filter (listings for brokerage page)
-  if (params.featured === "true") {
-    filters.push({
-      property: "Featured",
-      checkbox: { equals: true }
-    });
-  }
-
-  // For rent/sale splits on listings page
-  if (db === "sale") {
-    filters.push({ property: "Status", select: { equals: "For Sale" } });
-  }
-  if (db === "rent") {
-    filters.push({ property: "Status", select: { equals: "For Rent" } });
-  }
-
-  if (!filters.length) return undefined;
-  return filters.length === 1 ? filters[0] : { and: filters };
-}
-
-// Build Notion sort
-function buildSort(db) {
-  // Most DBs sort by Order ascending
-  const orderSorts = ["indexstats","indexhero","brokeragepage","pmstats","devmetrics","devstats","stats","team"];
-  if (orderSorts.includes(db)) {
-    return [{ property: "Order", direction: "ascending" }];
-  }
-  if (db === "testimonials") {
-    return [{ property: "Order", direction: "ascending" }];
-  }
-  if (db === "projects" || db === "sale" || db === "rent" || db === "listings") {
-    return [{ timestamp: "created_time", direction: "descending" }];
-  }
-  return [];
-}
-
-exports.handler = async function(event) {
-  const token = process.env.NOTION_TOKEN;
-
-  // ── Auth check ─────────────────────────────────────────
-  if (!token) {
-    return {
-      statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        error: "NOTION_TOKEN environment variable is not set.",
-        help: "In Netlify → Site Settings → Environment Variables, add NOTION_TOKEN = secret_xxx"
-      })
-    };
-  }
-
-  const params    = event.queryStringParameters || {};
-  const rawDb     = (params.db || "").toLowerCase();
-
-  // Map rent/sale aliases to listings DB
-  const dbKey = (rawDb === "sale" || rawDb === "rent") ? "listings" : rawDb;
-  const dbId  = DATABASE_IDS[dbKey];
-
-  if (!dbId || dbId.startsWith("PASTE_")) {
-    return {
-      statusCode: 400,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        error: `Database "${rawDb}" not configured.`,
-        help:  `Open notion-proxy.js and paste the Notion database ID for "${rawDb}" in the DATABASE_IDS object.`,
-        configured: Object.entries(DATABASE_IDS)
-          .filter(([,v]) => !v.startsWith("PASTE_"))
-          .map(([k]) => k)
-      })
-    };
-  }
-
-  const limit  = parseInt(params.limit) || 100;
-  const filter = buildFilter(rawDb, params);
-  const sorts  = buildSort(rawDb);
-
-  const body = { page_size: Math.min(limit, 100) };
-  if (filter) body.filter = filter;
-  if (sorts.length) body.sorts = sorts;
-
-  try {
-    const res = await fetch(`${NOTION_BASE}/databases/${dbId}/query`, {
-      method:  "POST",
-      headers: {
+// ── Node https wrapper (no fetch, no axios, no npm needed) ───────────────────
+function notionQuery(dbId, token, body) {
+  return new Promise((resolve, reject) => {
+    const payload  = JSON.stringify(body);
+    const options  = {
+      hostname: "api.notion.com",
+      path:     `/v1/databases/${dbId}/query`,
+      method:   "POST",
+      headers:  {
         "Authorization":  `Bearer ${token}`,
         "Notion-Version": NOTION_VERSION,
-        "Content-Type":   "application/json"
+        "Content-Type":   "application/json",
+        "Content-Length": Buffer.byteLength(payload),
       },
-      body: JSON.stringify(body)
+    };
+
+    const req = https.request(options, (res) => {
+      let raw = "";
+      res.on("data", (chunk) => { raw += chunk; });
+      res.on("end",  ()      => { resolve({ status: res.statusCode, raw }); });
     });
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error(`Notion API error ${res.status}:`, err);
-      return {
-        statusCode: res.status,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          error: `Notion API returned ${res.status}`,
-          detail: err,
-          db: rawDb,
-          dbId
-        })
-      };
+    req.on("error", reject);
+    req.write(payload);
+    req.end();
+  });
+}
+
+// ── Filter builder ───────────────────────────────────────────────────────────
+function buildFilter(rawDb, params) {
+  const f = [];
+
+  if (params.division) f.push({ property: "Division", select: { equals: params.division } });
+  if (params.featured === "true") f.push({ property: "Featured", checkbox: { equals: true } });
+  if (rawDb === "sale") f.push({ property: "Status", select: { equals: "For Sale" } });
+  if (rawDb === "rent") f.push({ property: "Status", select: { equals: "For Rent" } });
+
+  if (!f.length) return undefined;
+  return f.length === 1 ? f[0] : { and: f };
+}
+
+// ── Sort builder ─────────────────────────────────────────────────────────────
+function buildSorts(dbKey) {
+  const orderedDbs = ["indexhero","indexstats","brokeragepage","pmstats",
+                      "devmetrics","devstats","team","testimonials"];
+  if (orderedDbs.includes(dbKey)) {
+    return [{ property: "Order", direction: "ascending" }];
+  }
+  return [{ timestamp: "created_time", direction: "descending" }];
+}
+
+// ── Response helper ──────────────────────────────────────────────────────────
+function respond(statusCode, body) {
+  return {
+    statusCode,
+    headers: {
+      "Content-Type":                "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control":               "public, s-maxage=300, max-age=60",
+    },
+    body: JSON.stringify(body),
+  };
+}
+
+// ── Handler ──────────────────────────────────────────────────────────────────
+exports.handler = async function (event) {
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: { "Access-Control-Allow-Origin": "*" }, body: "" };
+  }
+
+  // Auth
+  const token = process.env.NOTION_TOKEN;
+  if (!token) {
+    return respond(500, {
+      error: "NOTION_TOKEN not set",
+      help:  "Netlify → Site Settings → Environment Variables → add NOTION_TOKEN",
+    });
+  }
+
+  // Resolve db key
+  const params = event.queryStringParameters || {};
+  const rawDb  = (params.db || "").toLowerCase();
+  const dbKey  = (rawDb === "sale" || rawDb === "rent") ? "listings"
+               : rawDb === "stats" ? "indexstats"
+               : rawDb;
+  const dbId   = DATABASE_IDS[dbKey];
+
+  if (!dbId || dbId.startsWith("PASTE_")) {
+    return respond(400, {
+      error:      `Database "${rawDb}" not configured`,
+      help:       `In notion-proxy.js, paste your Notion DB ID for key "${dbKey}" in DATABASE_IDS`,
+      configured: Object.entries(DATABASE_IDS)
+        .filter(([, v]) => v && !v.startsWith("PASTE_"))
+        .map(([k]) => k),
+    });
+  }
+
+  // Build request body
+  const reqBody = { page_size: Math.min(parseInt(params.limit) || 100, 100) };
+  const filter  = buildFilter(rawDb, params);
+  const sorts   = buildSorts(dbKey);
+  if (filter) reqBody.filter = filter;
+  if (sorts.length) reqBody.sorts = sorts;
+
+  try {
+    const { status, raw } = await notionQuery(dbId, token, reqBody);
+
+    let parsed;
+    try { parsed = JSON.parse(raw); }
+    catch (e) {
+      console.error("Non-JSON from Notion:", raw.slice(0, 200));
+      return respond(502, { error: "Notion returned non-JSON", detail: raw.slice(0, 200) });
     }
 
-    const data = await res.json();
+    if (status !== 200) {
+      console.error(`Notion ${status} for db=${dbKey}:`, parsed);
+      return respond(status, {
+        error:  `Notion API error ${status}: ${parsed.code || "unknown"}`,
+        detail: parsed.message || "",
+        help:
+          status === 401 ? "NOTION_TOKEN is wrong or expired — regenerate it at notion.so/my-integrations" :
+          status === 404 ? `DB "${dbKey}" not found. Check the ID in DATABASE_IDS and that the DB is connected to your integration (open DB → ••• → Add connections)` :
+          status === 400 ? "Bad filter/sort — check column names match the guide in notion-proxy.js" :
+          "Open Netlify → Functions → notion-proxy → View log for full stack trace",
+      });
+    }
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Content-Type":                "application/json",
-        "Access-Control-Allow-Origin": "*",
-        // Cache 60s in browser, 300s in Netlify CDN — change as needed
-        "Cache-Control":               "public, s-maxage=300, max-age=60"
-      },
-      body: JSON.stringify(data)
-    };
+    return respond(200, parsed);
 
   } catch (err) {
-    console.error("Proxy fetch error:", err);
-    return {
-      statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        error: "Proxy fetch failed",
-        message: err.message,
-        db: rawDb
-      })
-    };
+    console.error("notion-proxy crash:", err);
+    return respond(502, {
+      error:   "Function crashed — likely a network or config issue",
+      message: err.message,
+      help:    "Open Netlify → Functions tab → notion-proxy → click a recent invocation to see the full log",
+    });
   }
 };
