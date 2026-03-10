@@ -66,20 +66,20 @@ const https = require("https");
 // ── PASTE YOUR DATABASE IDs HERE ─────────────────────────────────────────────
 // Dashes are fine — we strip them automatically
 const DATABASE_IDS = {
-  indexhero:     "f013290775aa83d284e9810acc307b64",
-  indexstats:    "31f3290775aa808c9607f665dfa6cd5f",
-  brokeragepage: "31f3290775aa80ab9154cbe37f1c3df0",
-  listings:      "31f3290775aa8074b28bd5a6749ecb48",
-  projects:      "31f3290775aa8099bf08e57f1169a3dd",
-  testimonials:  "31f3290775aa8033ae44f7575f428859",
-  team:          "31f3290775aa80aab084fde2fa2e677c",
-  pmstats:       "31f3290775aa80e1be4fd15fba33d531",
-  devmetrics:    "2713290775aa8308bf4c011f83125e99",
-  devstats:      "2233290775aa825daabb0145ca8b5900",
+  indexhero:     "PASTE_HOMEPAGE_HERO_DB_ID",
+  indexstats:    "PASTE_HOMEPAGE_STATS_DB_ID",
+  brokeragepage: "PASTE_BROKERAGE_PAGE_CONFIG_DB_ID",
+  listings:      "PASTE_LISTINGS_DB_ID",
+  projects:      "PASTE_PROJECTS_DB_ID",
+  testimonials:  "PASTE_TESTIMONIALS_DB_ID",
+  team:          "PASTE_TEAM_DB_ID",
+  pmstats:       "PASTE_PM_STATS_DB_ID",
+  devmetrics:    "PASTE_DEV_METRICS_DB_ID",
+  devstats:      "PASTE_DEV_STATS_DB_ID",
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
-const NOTION_VERSION = "2022-06-28";
+const NOTION_VERSION = "2026-03-11";
 
 // Strip dashes from Notion IDs — handles both formats Notion shows
 function cleanId(id) {
@@ -148,6 +148,59 @@ exports.handler = async function (event) {
   // CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 204, headers: { "Access-Control-Allow-Origin": "*" }, body: "" };
+  }
+
+  // ── PING: test token without needing a DB ─────────────
+  // Hit /.netlify/functions/notion-proxy?db=ping to test auth only
+  if ((event.queryStringParameters || {}).db === "ping") {
+    const token = process.env.NOTION_TOKEN;
+    if (!token) return respond(500, { ok: false, error: "NOTION_TOKEN not set" });
+    if (!token.startsWith("secret_")) return respond(500, { ok: false, error: "Token doesn't start with secret_" });
+
+    // Call Notion /users/me to validate the token
+    let pingResult;
+    try {
+      const payload = "";
+      const result  = await new Promise((resolve, reject) => {
+        const req = https.request({
+          hostname: "api.notion.com",
+          port: 443,
+          path: "/v1/users/me",
+          method: "GET",
+          headers: {
+            "Authorization":  `Bearer ${token}`,
+            "Notion-Version": NOTION_VERSION,
+          },
+        }, (res) => {
+          let data = "";
+          res.on("data", c => data += c);
+          res.on("end", () => resolve({ status: res.statusCode, body: data }));
+        });
+        req.on("error", reject);
+        req.setTimeout(6000, () => req.destroy(new Error("timeout")));
+        req.end();
+      });
+      pingResult = { httpStatus: result.status, body: JSON.parse(result.body) };
+    } catch(e) {
+      return respond(502, { ok: false, error: "Network error reaching Notion", message: e.message });
+    }
+
+    if (pingResult.httpStatus === 200) {
+      return respond(200, {
+        ok: true,
+        message: "Token is valid ✓",
+        integration: pingResult.body.name || pingResult.body.bot?.owner?.workspace_name || "unknown",
+        notionVersion: NOTION_VERSION,
+      });
+    }
+    return respond(pingResult.httpStatus, {
+      ok: false,
+      error: `Notion returned ${pingResult.httpStatus}`,
+      detail: pingResult.body,
+      help: pingResult.httpStatus === 401
+        ? "Token is invalid. Regenerate at notion.so/my-integrations and update NOTION_TOKEN in Netlify env vars, then redeploy."
+        : "Unexpected error — check Netlify function logs",
+    });
   }
 
   // ── Step 1: token check ────────────────────────────────
